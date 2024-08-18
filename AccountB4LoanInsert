@@ -1,0 +1,45 @@
+trigger AccountB4LoanInsert on Account (before insert,before update) {
+        /*  `````````````````SecurityValidationOnAccount````````````````````
+         *  1)  Security Contact SHOULD NOT be Same as Loan Contact.
+         * 
+         *  2)  Setting a Parent Account All Loan Account to "Account" [Ac.ParentId ='001Ig000008GpxKIAS']
+         * 
+         *  3)  Setting a 20% initial Interest Dedection for Regular Loan [Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20]
+         * 
+         */
+    
+    
+        //List<Loan__c> LoanC  = [select  Loan_given_to__c,Type,SecurityID__c from Loan__c WHERE Id IN :Trigger.new];
+        //if(Trigger.isBefore)
+        for(Account Ac:trigger.new) {
+        if(Ac.contact__C== Ac.Security_Contact__c) {
+            Ac.Security_Contact__c.adderror('This email already exists. Msg from trigger.');
+        }
+        Ac.ParentId ='001Ig000008GpxKIAS';
+        //Account Acc= [SELECT Id,Advance_Deduction__c,Loan_Amount__c FROM Account WHERE id in:trigger.new];
+        //if(Ac.Advance_Deduction__c == null) {
+        
+        if (Ac.Type == 'Regular_Loan') {
+            Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20;
+        } else {
+            Ac.Advance_Deduction__c = 0;
+        }
+        
+        //Ac.Advance_Deduction__c.adderror('Value should be  : '+Ac.Loan_Amount__c * 0.20);
+        //if (Ac.Advance_Deduction__c >= Ac.Loan_Amount__c *0.18  && Ac.Advance_Deduction__c <= Ac.Loan_Amount__c *0.22){
+        
+            //Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20;
+        //    Update Ac;
+        //}else{
+        
+        //Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20;
+        //Ac.Advance_Deduction__c.adderror('Value should be  : '+Ac.Loan_Amount__c * 0.20);
+        //}
+        
+    }
+
+        //Ac.Advance_Deduction__c= Ac.Loan_Amount__c*5;//Ac.Security_Contact__c.adderror('This email already exists. Msg from trigger.');
+        //}
+        //update Acc;
+    
+ }
