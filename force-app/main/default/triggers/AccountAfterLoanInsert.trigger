@@ -6,6 +6,9 @@ trigger AccountAfterLoanInsert on Account (After insert) {
      * 
      * 	3)	Updating Loan Amount in Respective Contact.
      * 
+     *  Planning
+     *  1)  Need to Create 10 Records when the Loan is Created.
+     *      10 records contains the 10 months of Repayment.
      */
     
     
