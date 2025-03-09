@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Chithamur Naidu Sangam --></label>
+        <name>Chithamur_Naidu_Sangam</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Playground Starter --></label>
+        <name>trlhdtips__Playground_Starter</name>
+    </customApplications>
     <customLabels>
         <label><!-- tt_BaseURL --></label>
         <name>trlhdtips__tt_BaseURL</name>
@@ -37,34 +45,6 @@
         <name>trlhdtips__tt_ResetPasswordWarning</name>
     </customLabels>
     <customTabs>
-        <label><!-- Command Center --></label>
-        <name>Command_Center</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Einstein Vision --></label>
-        <name>Einstein_Vision</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Heat Map --></label>
-        <name>Heat_Map</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Heat Map (Demo) --></label>
-        <name>Heat_Map_Mock</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- House Explorer --></label>
-        <name>House_Explorer</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Property Explorer --></label>
-        <name>Property_Explorer1</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Data Import --></label>
-        <name>Sample_Data_Import</name>
-    </customTabs>
-    <customTabs>
         <label><!-- Get Your Login Credentials --></label>
         <name>trlhdtips__Get_Your_Login_Credentials</name>
     </customTabs>
@@ -78,23 +58,7 @@
     </customTabs>
     <flowDefinitions>
         <flows/>
-        <fullName>Advertise_New_Property</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
         <fullName>Create_Share_record_on_Contact_Creation</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
-        <fullName>Opportunity_Status_Change</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
-        <fullName>Post_Price_Changes_to_Slack</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
-        <fullName>Price_Change_Push_Notification</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows/>

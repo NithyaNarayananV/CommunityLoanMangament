@@ -6,31 +6,8 @@ trigger AccountAfterLoanInsert on Account (After insert) {
      * 
      * 	3)	Updating Loan Amount in Respective Contact.
      * 
-     *  Planning
-     *      ------------------------------------------------
-     *              // Salesforce Project - Loan - Chithamur Naidu Sangam Application
-
-                    1. Person gets loan.
-                    If regular loan
-                    Then monthly loan repayment record should be created for next 10 months with status upcoming. 
-                    Every month a scheduled class should change that month record as due. 
-                    If the payment record is not manually updated by the date, then status should be changed to over due and email can be triggered to me.
-                    How to update the record when the paymen tis made on time?
-                    In dashboard current month dues will be visible. Just clicking the button corresponding to the per's name will uodate the record from due to paid on time.
-                    If the button is clickes when it is over due. It changes to paid late.
-
-
-
-                    If annual loan.
-           ------------------------------------------------ 
-           
-     *  1)  Need to Create 10 Records when the Loan is Created.
-     *      10 records contains the 10 months of Repayment.
-     * 
      */
     
-
-
     
     Account Ac = [select  Balance_Loan__c,Loan_Amount__c,CreatedDate,Active__c,Type,Advance_Deduction__c,Contact__c from Account WHERE Id IN :Trigger.new];
     String ContactId = ''+Ac.get('Contact__c');

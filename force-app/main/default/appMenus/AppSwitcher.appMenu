@@ -113,10 +113,6 @@
         <type>CustomApplication</type>
     </appMenuItems>
     <appMenuItems>
-        <name>DreamHouse</name>
-        <type>CustomApplication</type>
-    </appMenuItems>
-    <appMenuItems>
         <name>standard__FlowsApp</name>
         <type>CustomApplication</type>
     </appMenuItems>

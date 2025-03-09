@@ -8,5 +8,26 @@
         <plural>true</plural>
         <value>Sangam</value>
     </caseValues>
+    <fields>
+        <label><!-- Bought Date --></label>
+        <name>Bought_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>ContactName__c</name>
+        <relationshipLabel><!-- Sangam --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Details --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Member_Number --></label>
+        <name>Member_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shares Count --></label>
+        <name>SharesCount__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

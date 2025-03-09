@@ -8,6 +8,93 @@
         <plural>true</plural>
         <value>Repay Loans</value>
     </caseValues>
+    <fields>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+        <picklistValues>
+            <masterLabel>Installment</masterLabel>
+            <translation><!-- Installment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Interest</masterLabel>
+            <translation><!-- Interest --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Repay</masterLabel>
+            <translation><!-- Repay --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Balance Loan --></label>
+        <name>Balance_Loan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Interest percent --></label>
+        <name>Interest_percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Loan Account --></label>
+        <name>Loan_Account__c</name>
+        <relationshipLabel><!-- Repay Loans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Loan Amount --></label>
+        <name>Loan_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Loan Start date --></label>
+        <name>Loan_Start_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Loan_given_to__c</name>
+        <relationshipLabel><!-- Repay Loans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LoanerID --></label>
+        <name>LoanerID__c</name>
+    </fields>
+    <fields>
+        <label><!-- NetLoan --></label>
+        <name>NetLoan__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Repay_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repay Date --></label>
+        <name>Repay_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- SecurityContact --></label>
+        <name>SecurityContact__c</name>
+        <relationshipLabel><!-- Repay Loans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SecurityID --></label>
+        <name>SecurityID__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>InProgress</masterLabel>
+            <translation><!-- InProgress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OverDue</masterLabel>
+            <translation><!-- OverDue --></translation>
+        </picklistValues>
+    </fields>
     <layouts>
         <layout>Loan Layout</layout>
         <sections>
@@ -35,4 +122,12 @@
         <name>New_Repay</name>
     </quickActions>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Repay amount cannot cannot exceed Balance Amount --></errorMessage>
+        <name>Repay_Exceed_Check</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Pay_Installment --></label>
+        <name>Pay_Installment</name>
+    </webLinks>
 </CustomObjectTranslation>
