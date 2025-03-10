@@ -4,7 +4,7 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
         //Loan__c LoanC  = [Select CreatedDate,Loan_Account__c, Action__c, Repay_Amount__c from Loan__c WHERE Id in :Trigger.new];
         for (Loan__c LoanC :Trigger.new)
         {
-            LoanC.Name='Repay';
+            //LoanC.Name='Repay';
             String AccountId = ''+LoanC.get('Loan_Account__c');
             Account Ac = Database.query('select Active__c,Balance_Loan__c,state__C,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
             Ac.Balance_Loan__c -= LoanC.Repay_Amount__c;
