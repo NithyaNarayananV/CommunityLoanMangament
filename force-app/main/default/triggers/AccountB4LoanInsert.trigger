@@ -1,20 +1,22 @@
 trigger AccountB4LoanInsert on Account (before insert,before update) {
-        /*  `````````````````SecurityValidationOnAccount````````````````````
-         *  1)  Security Contact SHOULD NOT be Same as Loan Contact.
-         * 
-         *  2)  Setting a Parent Account All Loan Account to "Account" [Ac.ParentId ='001Ig000008GpxKIAS']
-         * 
-         *  3)  Setting a 20% initial Interest Dedection for Regular Loan [Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20]
-         * 
-         */
-    
-    
-        //List<Loan__c> LoanC  = [select  Loan_given_to__c,Type,SecurityID__c from Loan__c WHERE Id IN :Trigger.new];
-        //if(Trigger.isBefore)
-        for(Account Ac:trigger.new) {
-        if(Ac.contact__C== Ac.Security_Contact__c) {
+    /*  `````````````````SecurityValidationOnAccount````````````````````
+        *  1)  Security Contact SHOULD NOT be Same as Loan Contact.
+        * 
+        *  2)  Setting a Parent Account All Loan Account to "Account" [Ac.ParentId ='001Ig000008GpxKIAS']
+        * 
+        *  3)  Setting a 20% initial Interest Dedection for Regular Loan [Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20]
+        * 
+        *  4) Repay Date Should be atlease 30 days of Loan Date
+        */
+
+
+    //List<Loan__c> LoanC  = [select  Loan_given_to__c,Type,SecurityID__c from Loan__c WHERE Id IN :Trigger.new];
+    //if(Trigger.isBefore)
+    for(Account Ac:trigger.new) {
+        if(Ac.contact__C== Ac.Security_Contact__c) 
             Ac.Security_Contact__c.adderror('This email already exists. Msg from trigger.');
-        }
+        if( Ac.Loan_Date__c.addDays(30) > Ac.SLAExpirationDate__c) 
+            Ac.SLAExpirationDate__c.addError('Repay Date Should be atlease 30 days of Loan Date');
         Ac.ParentId ='001Ig000008GpxKIAS';
         //Account Acc= [SELECT Id,Advance_Deduction__c,Loan_Amount__c FROM Account WHERE id in:trigger.new];
         //if(Ac.Advance_Deduction__c == null) {

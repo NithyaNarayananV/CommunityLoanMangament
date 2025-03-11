@@ -16,9 +16,14 @@ trigger UpdateTotalSharesinContact on Shares__c (after insert) {
     }
     //if( S.get('Details__c') =='INITIAL SHARE')    
     //{
-    Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c from Account WHERE Id  = '0012w00001Kv7dcAAB']; 
-    A.Loan_Amount__c += S.SharesCount__c * 50;
-    update A;
+    try{
+        Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c from Account WHERE Id  = '0012w00001Kv7dcAAB']; 
+        A.Loan_Amount__c += S.SharesCount__c * 50;
+        update A;
+    }    
+    catch(DmlException e) {
+        System.debug('The following exception has occurred: ' + e.getMessage());
+    }
     //}
     /*
     List<Shares__c> SL = [Select Id, ContactName__c, SharesCount__c, Details__c, Member_Number__c from Shares__c where Id IN :Trigger.new];

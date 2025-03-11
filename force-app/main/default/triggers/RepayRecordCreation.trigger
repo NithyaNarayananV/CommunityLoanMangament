@@ -1,7 +1,7 @@
 trigger RepayRecordCreation on Loan__c (after insert) {
     
     System.debug('Start Loan');
-    list<Loan__c> LoanCList  = [Select CreatedDate,Loan_Account__c,Loan_given_to__c, Action__c, Repay_Amount__c,state__C from Loan__c WHERE Id in :Trigger.new];
+    list<Loan__c> LoanCList  = [Select CreatedDate, Loan_Account__c,Loan_given_to__c, Action__c, Repay_Amount__c,state__C from Loan__c WHERE Id in :Trigger.new];
     
     for ( Loan__c LoanC : LoanCList) 
     {
@@ -31,48 +31,52 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 system.debug(Ac.Advance_Deduction__c);
 
                 
-                // 10 New Records Creation for Installment of the Loan
-                list<Loan__c> InstallmentList = new list<Loan__c>();
-                Date today = Ac.Loan_Date__c;
-                for (Integer i = 0;i<10;i++)
+                if (Ac.Type == 'Regular Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
                 {
-                    Loan__c Installment = new Loan__c();
-                    
-                    Installment.Loan_Account__c = AccountId;
-                    
-                    Installment.Action__c = 'Installment';
-                    
-                    Installment.Repay_Amount__c = Ac.Loan_Amount__c/10;
-                    Date nextMonthDate = today.addMonths(i+1);                    
-                    // Check for day overflow and adjust the date (e.g., February 30)
-                    if (nextMonthDate.day() != today.day()) {
-                        Integer daysInNextMonth = Date.daysInMonth(nextMonthDate.year(), nextMonthDate.month());
-                        nextMonthDate = Date.newInstance(nextMonthDate.year(), nextMonthDate.month(), Math.min(daysInNextMonth, today.day()));
+                    // 10 New Records Creation for Installment of the Loan
+                    list<Loan__c> InstallmentList = new list<Loan__c>();
+                    Date today = Ac.Loan_Date__c;
+                    for (Integer i = 0;i<10;i++)
+                    {
+                        Loan__c Installment = new Loan__c();
+                        
+                        Installment.Loan_Account__c = AccountId;
+                        
+                        Installment.Action__c = 'Installment';
+                        
+                        Installment.Repay_Amount__c = Ac.Loan_Amount__c/10;
+                        Date nextMonthDate = today.addMonths(i+1);                    
+                        // Check for day overflow and adjust the date (e.g., February 30)
+                        if (nextMonthDate.day() != today.day()) {
+                            Integer daysInNextMonth = Date.daysInMonth(nextMonthDate.year(), nextMonthDate.month());
+                            nextMonthDate = Date.newInstance(nextMonthDate.year(), nextMonthDate.month(), Math.min(daysInNextMonth, today.day()));
+                        }
+                        Installment.Name= 'Installment - '+(i+1)+' - '+C.get('Lastname');
+                        Installment.Repay_Date__c=nextMonthDate;
+                        if (nextMonthDate < Date.today())
+                            Installment.state__C = 'OverDue';
+                        else if(nextMonthDate < Date.today().addDays(28))
+                            Installment.state__C = 'Due';
+                        else
+                            Installment.state__C = 'Upcoming';                    
+                        System.debug(Installment.Name+'  | '+Installment.Repay_Date__c);
+                        InstallmentList.add(Installment);
+                        if(Ac.State__C == 'OverDue' || Installment.state__C == 'OverDue')
+                            Ac.state__C = 'OverDue';
+                        else if(Ac.State__C == 'Due' || Installment.state__C == 'Due')
+                                Ac.state__C = 'Due';
+                        else
+                            Ac.state__C = 'Upcoming';
+                        
                     }
-                    Installment.Name= 'Installment - '+(i+1)+' - '+C.get('Lastname');
-                    Installment.Repay_Date__c=nextMonthDate;
-                    if (nextMonthDate < Date.today())
-                        Installment.state__C = 'OverDue';
-                    else if(nextMonthDate < Date.today().addDays(28))
-                        Installment.state__C = 'Due';
-                    else
-                        Installment.state__C = 'Upcoming';                    
-                    System.debug(Installment.Name+'  | '+Installment.Repay_Date__c);
-                    InstallmentList.add(Installment);
-                    if(Ac.State__C == 'OverDue' || Installment.state__C == 'OverDue')
-                        Ac.state__C = 'OverDue';
-                    else if(Ac.State__C == 'Due' || Installment.state__C == 'Due')
-                            Ac.state__C = 'Due';
-                    else
-                        Ac.state__C = 'Upcoming';
-                    
+                    try {
+                        insert InstallmentList;
+                        //System.debug('Account created successfully with Id: ' + acc.Id);
+                    } catch (Exception e) {
+                        System.debug('Error creating 10 Installment Records: ' + e.getMessage());
+                    }
                 }
-                try {
-                    insert InstallmentList;
-                    //System.debug('Account created successfully with Id: ' + acc.Id);
-                } catch (Exception e) {
-                    System.debug('Error creating 10 Installment Records: ' + e.getMessage());
-                }
+                
             }
             if (LoanC.Action__c == 'Repay' || (LoanC.Action__c == 'Installment' && LoanC.state__C != 'Upcoming'))
             {
