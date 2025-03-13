@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>test</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Create_Share_record_on_Contact_Creation</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>InstallemtFlow</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Test_on_Loan_Amount_updation</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>customer_satisfaction</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>net_promoter_score</members>
+        <name>Flow</name>
+    </types>
+    <version>48.0</version>
+</Package>
