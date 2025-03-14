@@ -30,14 +30,16 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;
                 system.debug(Ac.Advance_Deduction__c);
 
-                
-                if (Ac.Type == 'Regular Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
+                System.debug('Before | Ac.Type == Regular_Loan | '+Ac.Type);
+                if (Ac.Type == 'Regular_Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
                 {
+                    System.debug('Ac.Type == Regular_Loan');
                     // 10 New Records Creation for Installment of the Loan
                     list<Loan__c> InstallmentList = new list<Loan__c>();
                     Date today = Ac.Loan_Date__c;
                     for (Integer i = 0;i<10;i++)
                     {
+                        System.debug('For Loop - '+i);
                         Loan__c Installment = new Loan__c();
                         
                         Installment.Loan_Account__c = AccountId;
@@ -66,16 +68,18 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                         else if(Ac.State__C == 'Due' || Installment.state__C == 'Due')
                                 Ac.state__C = 'Due';
                         else
-                            Ac.state__C = 'Upcoming';
-                        
+                            Ac.state__C = 'Upcoming';                        
+                        System.debug(Ac.state__C);
                     }
                     try {
                         insert InstallmentList;
-                        //System.debug('Account created successfully with Id: ' + acc.Id);
+                        System.debug('Account created successfully with Id: ' + ac.Id);
                     } catch (Exception e) {
                         System.debug('Error creating 10 Installment Records: ' + e.getMessage());
                     }
+                    system.debug('InstallmentList.size() : '+InstallmentList.size());
                 }
+                system.debug('out of : if (LoanC.Action__c == Interest)');
                 
             }
             if (LoanC.Action__c == 'Repay' || (LoanC.Action__c == 'Installment' && LoanC.state__C != 'Upcoming'))

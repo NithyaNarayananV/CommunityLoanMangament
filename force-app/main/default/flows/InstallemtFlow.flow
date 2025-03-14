@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
+        <description>If No record, Account should be closed</description>
+        <name>Closed</name>
+        <label>Closed</label>
+        <locationX>1106</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>Account_Details.State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Account_Status_Desisioning</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>If No record, Account should be closed</description>
+        <name>No_Record_Closed</name>
+        <label>No Record -&gt; Closed</label>
+        <locationX>842</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>Account_Details.State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InstallmentUpdating</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Other_Assignments</name>
+        <label>Payment Date, Loan Balance</label>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Installment_Details.PyamentDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PaymentDateT</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account_Details.Balance_Loan__c</assignToReference>
+            <operator>Subtract</operator>
+            <value>
+                <elementReference>Installment_Amount_Paying</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Getting_Other_Due_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>PaidLate</name>
         <label>PaidLate</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Installment_Details.State__c</assignToReference>
@@ -13,13 +70,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>InstallmentUpdating</targetReference>
+            <targetReference>Other_Assignments</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>PaidOnTime</name>
         <label>PaidOnTime</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Installment_Details.State__c</assignToReference>
@@ -29,13 +86,118 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Other_Assignments</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Status_Due</name>
+        <label>Status = Due</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>Account_Details.State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Due</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InstallmentUpdating</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Status_OverDue</name>
+        <label>Status = OverDue</label>
+        <locationX>578</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>Account_Details.State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Overdue</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InstallmentUpdating</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Status_to_InProgress</name>
+        <label>Status to InProgress</label>
+        <locationX>50</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>Account_Details.State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>InProgress</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>InstallmentUpdating</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <description>* If no other Due / Over Due Record is present, Status should be In Progress
+* If No other Upcoming records also present, Status should be Cloused</description>
+        <name>Account_Status_Desisioning</name>
+        <label>Account Status Decisioning</label>
+        <locationX>446</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>No_Record_Closed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default - Close</defaultConnectorLabel>
+        <rules>
+            <name>Upcoming</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Getting_Other_Due_Records.State__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Upcoming</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_to_InProgress</targetReference>
+            </connector>
+            <label>Upcoming</label>
+        </rules>
+        <rules>
+            <name>Due</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Getting_Other_Due_Records.State__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Due</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_Due</targetReference>
+            </connector>
+            <label>Due</label>
+        </rules>
+        <rules>
+            <name>OverDue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Getting_Other_Due_Records.State__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OverDue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_OverDue</targetReference>
+            </connector>
+            <label>OverDue</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Due_Or_OverDue</name>
         <label>Due Or OverDue</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>PaidOnTime</targetReference>
@@ -45,10 +207,10 @@
             <name>Paid_Late</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Installment_Details.State__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>PaymentDateT</leftValueReference>
+                <operator>GreaterThan</operator>
                 <rightValue>
-                    <stringValue>OverDue</stringValue>
+                    <elementReference>Installment_Details.Repay_Date__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -57,6 +219,11 @@
             <label>Paid Late</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>PreInstallmentDate</name>
+        <dataType>Date</dataType>
+        <expression>({!Installment_Details.Repay_Date__c} - 25 )</expression>
+    </formulas>
     <formulas>
         <name>TodayDateFormula</name>
         <dataType>Date</dataType>
@@ -86,7 +253,7 @@
     <recordLookups>
         <name>Account_Details</name>
         <label>Account Details</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -104,9 +271,63 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>To update the Account stauts</description>
+        <name>Getting_Other_Due_Records</name>
+        <label>Getting Other Due Records</label>
+        <locationX>446</locationX>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Status_Desisioning</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Closed</targetReference>
+        </faultConnector>
+        <filters>
+            <field>State__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Due</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OverDue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Upcoming</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Installment_Details.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Loan_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account_Details.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Loan__c</object>
+        <sortField>Repay_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Installment_Details</name>
         <label>Installment Details</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -141,15 +362,25 @@
     </recordLookups>
     <recordUpdates>
         <name>InstallmentUpdating</name>
-        <label>InstallmentUpdating</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
+        <label>Installment Payment Update</label>
+        <locationX>446</locationX>
+        <locationY>1274</locationY>
+        <connector>
+            <targetReference>Update_Account</targetReference>
+        </connector>
         <inputReference>Installment_Details</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Account</name>
+        <label>Update Account</label>
+        <locationX>446</locationX>
+        <locationY>1382</locationY>
+        <inputReference>Account_Details</inputReference>
     </recordUpdates>
     <screens>
         <name>Installment_Screen</name>
         <label>Installment Screen</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -158,17 +389,21 @@
             <targetReference>Due_Or_OverDue</targetReference>
         </connector>
         <fields>
-            <name>TodayDate</name>
+            <name>PaymentDateT</name>
             <dataType>Date</dataType>
             <defaultValue>
                 <elementReference>TodayDateFormula</elementReference>
             </defaultValue>
-            <fieldText>TodayDate</fieldText>
+            <fieldText>Payment Date</fieldText>
             <fieldType>InputField</fieldType>
             <isReadOnly>
                 <booleanValue>false</booleanValue>
             </isReadOnly>
             <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;em style=&quot;font-size: 11px;&quot;&gt;Please select Date Between - &lt;/em&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt;&lt;em&gt;{!PreInstallmentDate}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt; &amp;amp; &lt;/em&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt;&lt;em&gt;{!TodayDateFormula}&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!PaymentDateT} &gt;({!Installement_Due_Date}-25) &amp;&amp; {!PaymentDateT} &lt;= {!TodayDateFormula}</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>Installement_Due_Date</name>
@@ -201,13 +436,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Account_Details</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>InstallmentAmount</name>
         <dataType>Number</dataType>
@@ -215,6 +450,16 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>PaymentDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>TodayDateFormula</elementReference>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>
