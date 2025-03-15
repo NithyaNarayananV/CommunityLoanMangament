@@ -590,9 +590,19 @@
                     <label>Pending</label>
                 </value>
                 <value>
-                    <fullName>Closed</fullName>
+                    <fullName>Closed On Time</fullName>
                     <default>false</default>
-                    <label>Closed</label>
+                    <label>Closed On Time</label>
+                </value>
+                <value>
+                    <fullName>Closed Early</fullName>
+                    <default>false</default>
+                    <label>Closed Early</label>
+                </value>
+                <value>
+                    <fullName>Closed Late</fullName>
+                    <default>false</default>
+                    <label>Closed Late</label>
                 </value>
                 <value>
                     <fullName>Other</fullName>

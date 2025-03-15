@@ -9,7 +9,7 @@ trigger AccountAfterLoanInsert on Account (After insert) {
      */
     
     
-    Account Ac = [select  Balance_Loan__c,Loan_Amount__c,CreatedDate,Active__c,Type,Advance_Deduction__c,Contact__c from Account WHERE Id IN :Trigger.new];
+    Account Ac = [select  Balance_Loan__c,Loan_Amount__c,CreatedDate,Active__c, Loan_Date__c, Type,Advance_Deduction__c,Contact__c from Account WHERE Id IN :Trigger.new];
     String ContactId = ''+Ac.get('Contact__c');
     Contact Cc = Database.query('Select Name, Loan__c from Contact WHERE Id  = \'' +ContactId +'\'');
 
@@ -20,7 +20,7 @@ trigger AccountAfterLoanInsert on Account (After insert) {
     //Ac.ParentId ='001Ig000008GpxKIAS';
     //date myDate = date.today.now();
     //+++++++++++++++++1111111111111111111112222222+++++++++++++++++++++++++++++++++
-    datetime myDate = datetime.now();
+    datetime myDate = Ac.Loan_Date__c;
     Ac.Balance_Loan__c=Ac.Loan_Amount__c;//
     //- Ac.Advance_Deduction__c;
     
