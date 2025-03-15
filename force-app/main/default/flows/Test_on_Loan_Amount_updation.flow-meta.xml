@@ -23,7 +23,7 @@
         <scale>2</scale>
     </formulas>
     <interviewLabel>Test on Loan Amount updation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Test on Loan Amount updation</label>
+    <label>N Interest Record Creation on Loan Account Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -61,6 +61,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>PyamentDate__c</field>
+            <value>
+                <elementReference>$Record.Loan_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Repay_Amount__c</field>
             <value>
                 <elementReference>InitialDedectionFormula</elementReference>
@@ -93,5 +99,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>
