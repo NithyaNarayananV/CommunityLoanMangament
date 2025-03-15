@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action__c</fullName>
+    <defaultValue>(&quot;Loan&quot;)</defaultValue>
+    <description>Loan or Repay or Interest</description>
+    <label>Action</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Installment</fullName>
+                <default>true</default>
+                <label>Installment</label>
+            </value>
+            <value>
+                <fullName>Repay</fullName>
+                <default>false</default>
+                <label>Repay</label>
+            </value>
+            <value>
+                <fullName>Interest</fullName>
+                <default>false</default>
+                <label>Interest</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Loan</fullName>
+    <fields>Name</fields>
+    <fields>Phone</fields>
+    <fields>MobilePhone</fields>
+    <fields>Birthdate</fields>
+    <fields>JoinedDate__c</fields>
+    <fields>Loan__c</fields>
+    <fields>Total_Shares__c</fields>
+    <fields>Share_Value__c</fields>
+    <label>Contact Loan</label>
+</CompactLayout>
