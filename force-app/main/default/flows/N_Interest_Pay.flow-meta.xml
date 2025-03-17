@@ -615,7 +615,7 @@
                 </fields>
                 <fields>
                     <name>DisFromInt</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;You can Pay Monthly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(0, 110, 255); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount}&lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;  for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(102, 145, 255); font-size: 14px;&quot;&gt;{!IntDueDateMonthFromInt}.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2); background-color: rgb(255, 255, 255);&quot;&gt;You can Pay Yearly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(34, 60, 255); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt; ₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2); background-color: rgb(255, 255, 255);&quot;&gt;for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(117, 147, 255); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;{!IntDueDateYearFromInt}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;Monthly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(0, 110, 255); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount}&lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;  for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(102, 145, 255); font-size: 14px;&quot;&gt;{!IntDueDateMonthFromInt}.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(2, 2, 2);&quot;&gt;Yearly Interest of&lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(34, 60, 255); font-size: 16px;&quot;&gt; ₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(2, 2, 2);&quot;&gt;for Due date  &lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(117, 147, 255); font-size: 14px;&quot;&gt;{!IntDueDateYearFromInt}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -661,6 +661,12 @@
                             <stringValue>Monthly or Yearly?</stringValue>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -686,6 +692,36 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>DisMonthPay</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;Monthly Interest of&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 71, 71); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>MonthlyOrYearly.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DisYearPay</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;Yearly Interest of &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(255, 71, 71);&quot;&gt;₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>MonthlyOrYearly.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <nextOrFinishButtonLabel>Pay</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
