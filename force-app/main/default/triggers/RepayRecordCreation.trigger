@@ -22,6 +22,7 @@ trigger RepayRecordCreation on Loan__c (after insert) {
             if (LoanC.Action__c == 'Interest')
             {
                 LoanC.Name= 'Interest Pay - '+C.get('Lastname') ;//Ac.Account_Id__c;
+                if(Ac.Type =='Regular_Loan')
                 LoanC.Repay_Date__c = Ac.Loan_Date__c;
                 System.debug('Else |  Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;');
                 //if(Ac.Type  =='Annual_Loan')

@@ -195,6 +195,12 @@
             <targetReference>Update_Account</targetReference>
         </connector>
         <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <stringValue>Interest</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Loan_Account__c</field>
             <value>
                 <elementReference>recordId</elementReference>
@@ -235,6 +241,12 @@
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <stringValue>Interest</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Loan_Account__c</field>
             <value>
@@ -277,6 +289,12 @@
             <targetReference>Update_Account</targetReference>
         </connector>
         <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <stringValue>Interest</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Loan_Account__c</field>
             <value>
                 <elementReference>recordId</elementReference>
@@ -317,6 +335,12 @@
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <stringValue>Interest</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Loan_Account__c</field>
             <value>
@@ -380,7 +404,7 @@
         <connector>
             <targetReference>Monthly_or_Yearly</targetReference>
         </connector>
-        <filterLogic>1</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Loan_Account__c</field>
             <operator>EqualTo</operator>
@@ -388,9 +412,16 @@
                 <elementReference>Account_Details.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Action__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Interest</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Loan__c</object>
-        <sortField>Repay_Date__c</sortField>
+        <sortField>CreatedDate</sortField>
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
