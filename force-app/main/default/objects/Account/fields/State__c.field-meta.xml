@@ -58,7 +58,7 @@
             <value>
                 <fullName>Closed</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Closed</label>
             </value>
         </valueSetDefinition>
