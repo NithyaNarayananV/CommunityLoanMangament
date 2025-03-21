@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Paid_To__c</fullName>
+    <label>Paid To</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NN</fullName>
+                <default>false</default>
+                <label>NN</label>
+            </value>
+            <value>
+                <fullName>NVR</fullName>
+                <default>false</default>
+                <label>NVR</label>
+            </value>
+            <value>
+                <fullName>Sangam</fullName>
+                <default>false</default>
+                <label>Sangam</label>
+            </value>
+            <value>
+                <fullName>Raja</fullName>
+                <default>false</default>
+                <label>Raja</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
