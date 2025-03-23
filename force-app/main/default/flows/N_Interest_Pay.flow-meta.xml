@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Paid_To_Picklist_Default</name>
+        <label>Assign Paid To Picklist Default</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>Interest_Details.Paid_To__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NN</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_or_Yearly</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -12,7 +28,7 @@
         <name>Monthly_or_Yearly_1st_or_not</name>
         <label>Monthly or Yearly | 1st or not</label>
         <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
         </defaultConnector>
@@ -190,7 +206,7 @@
         <name>Next_Month_Interest_Paid</name>
         <label>Next Month Interest Paid</label>
         <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -237,7 +253,7 @@
         <name>Next_Year_Interest_Paid</name>
         <label>Next Year Interest Paid</label>
         <locationX>842</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -284,7 +300,7 @@
         <name>X1st_Month_Interest_Paid</name>
         <label>1st Month Interest Paid</label>
         <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -331,7 +347,7 @@
         <name>X1st_Year_Interest_Paid</name>
         <label>1st Year Interest Paid</label>
         <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -402,7 +418,7 @@
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Monthly_or_Yearly</targetReference>
+            <targetReference>Assign_Paid_To_Picklist_Default</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -429,7 +445,7 @@
         <name>Update_Account</name>
         <label>Update Account</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>866</locationY>
         <inputReference>Account_Details</inputReference>
     </recordUpdates>
     <screens>
@@ -437,7 +453,7 @@
         <name>Error</name>
         <label>Error</label>
         <locationX>1106</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -456,7 +472,7 @@
         <name>Monthly_or_Yearly</name>
         <label>Monthly or Yearly</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -694,34 +710,68 @@
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>DisMonthPay</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;Monthly Interest of&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 71, 71); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>MonthlyOrYearly.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>DisYearPay</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;Yearly Interest of &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(255, 71, 71);&quot;&gt;₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>MonthlyOrYearly.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+            <name>Monthly_or_Yearly_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Monthly_or_Yearly_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>DisMonthPay</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;Monthly Interest of&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 71, 71); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>MonthlyOrYearly.value</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>DisYearPay</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;Yearly Interest of &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(255, 71, 71);&quot;&gt;₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>MonthlyOrYearly.value</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Monthly_or_Yearly_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <fieldType>ObjectProvided</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <objectFieldReference>Interest_Details.Paid_To__c</objectFieldReference>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <nextOrFinishButtonLabel>Pay</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>

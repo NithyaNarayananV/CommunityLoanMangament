@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+<!-- 
+    This is a custom field for the Loan object. 
+    It is a picklist field that allows the user to select the name of the person who received the payment.
+    The picklist values are: NN, NVR, Sangam, Raja, Others.
+    The field is not required.
+
+    Furture enhancements:
+    1. Need to add this field in Screen Triggered Flows. ( 2 Flows)
+
+-->
     <fullName>Paid_To__c</fullName>
     <label>Paid To</label>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -10,7 +20,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>NN</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>NN</label>
             </value>
             <value>
