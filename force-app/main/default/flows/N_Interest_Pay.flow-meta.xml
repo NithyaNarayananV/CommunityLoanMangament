@@ -5,7 +5,7 @@
     <assignments>
         <name>Assign_Paid_To_Picklist_Default</name>
         <label>Assign Paid To Picklist Default</label>
-        <locationX>578</locationX>
+        <locationX>974</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>Interest_Details.Paid_To__c</assignToReference>
@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Monthly_or_Yearly</targetReference>
+            <targetReference>Loan_Type</targetReference>
         </connector>
     </assignments>
     <customProperties>
@@ -25,10 +25,35 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Loan_Type</name>
+        <label>Loan Type</label>
+        <locationX>974</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Loan_Type_is_not_Annual_Loan</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Annual_Loan</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Account_Details.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annual_Loan</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Monthly_or_Yearly</targetReference>
+            </connector>
+            <label>Annual Loan</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Monthly_or_Yearly_1st_or_not</name>
         <label>Monthly or Yearly | 1st or not</label>
         <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
         </defaultConnector>
@@ -206,7 +231,7 @@
         <name>Next_Month_Interest_Paid</name>
         <label>Next Month Interest Paid</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -253,7 +278,7 @@
         <name>Next_Year_Interest_Paid</name>
         <label>Next Year Interest Paid</label>
         <locationX>842</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -300,7 +325,7 @@
         <name>X1st_Month_Interest_Paid</name>
         <label>1st Month Interest Paid</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -347,7 +372,7 @@
         <name>X1st_Year_Interest_Paid</name>
         <label>1st Year Interest Paid</label>
         <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -393,7 +418,7 @@
     <recordLookups>
         <name>Account_Details</name>
         <label>Account Details</label>
-        <locationX>578</locationX>
+        <locationX>974</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -414,7 +439,7 @@
     <recordLookups>
         <name>Interest_Details</name>
         <label>Interest Details</label>
-        <locationX>578</locationX>
+        <locationX>974</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -445,7 +470,7 @@
         <name>Update_Account</name>
         <label>Update Account</label>
         <locationX>578</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <inputReference>Account_Details</inputReference>
     </recordUpdates>
     <screens>
@@ -453,7 +478,7 @@
         <name>Error</name>
         <label>Error</label>
         <locationX>1106</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -469,10 +494,27 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Loan_Type_is_not_Annual_Loan</name>
+        <label>Loan Type is not Annual Loan</label>
+        <locationX>1370</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorDisplay</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 20px;&quot;&gt;&lt;u&gt;Dood, as per the rule, you can only create an interest record to Annual Loan&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Exit</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Monthly_or_Yearly</name>
         <label>Monthly or Yearly</label>
         <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -778,7 +820,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Account_Details</targetReference>
