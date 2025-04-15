@@ -10,8 +10,11 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Chithamur Naidu Sangam</label>
     <navType>Standard</navType>
+    <tabs>Home1</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>Shares__c</tabs>

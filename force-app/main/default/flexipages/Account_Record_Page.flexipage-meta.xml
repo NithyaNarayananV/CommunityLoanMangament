@@ -11,7 +11,7 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
+                                    <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annual_Loan</rightValue>
                                 </criteria>
@@ -41,7 +41,7 @@
                         <valueListItems>
                             <value>Account.Interest_Payment</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.State__c}</leftValue>
                                     <operator>NE</operator>
@@ -51,6 +51,11 @@
                                     <leftValue>{!Record.State__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annual_Loan</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -136,6 +141,9 @@
                         <valueListItems>
                             <value>State__c</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Paid_To__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -158,7 +166,7 @@
                 <identifier>lst_dynamicRelatedList</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.Type__C}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Annual_Loan</rightValue>
                     </criteria>
@@ -210,6 +218,9 @@
                         <valueListItems>
                             <value>State__c</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Paid_To__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -232,7 +243,7 @@
                 <identifier>lst_dynamicRelatedList2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type}</leftValue>
+                        <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Regular_Loan</rightValue>
                     </criteria>
@@ -280,7 +291,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Type</fieldItem>
+                <fieldItem>Record.Type__c</fieldItem>
                 <identifier>RecordTypeField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -443,7 +454,7 @@
                     <visibilityRule>
                         <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                         <criteria>
-                            <leftValue>{!Record.Type}</leftValue>
+                            <leftValue>{!Record.Type__c}</leftValue>
                             <operator>EQUAL</operator>
                             <rightValue>Regular_Loan</rightValue>
                         </criteria>
@@ -464,7 +475,7 @@
                     <visibilityRule>
                         <booleanFilter>1 AND 2</booleanFilter>
                         <criteria>
-                            <leftValue>{!Record.Type}</leftValue>
+                            <leftValue>{!Record.Type__c}</leftValue>
                             <operator>EQUAL</operator>
                             <rightValue>Annual_Loan</rightValue>
                         </criteria>

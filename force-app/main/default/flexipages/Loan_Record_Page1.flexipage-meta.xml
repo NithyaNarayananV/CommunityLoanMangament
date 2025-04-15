@@ -98,6 +98,12 @@
                 <identifier>RecordRepay_Amount_cField2</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Paid_To__c</fieldItem>
+                <identifier>RecordPaid_To__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-67b3e175-41dc-4289-9026-ec5e8f65a885</name>
         <type>Facet</type>
     </flexiPageRegions>

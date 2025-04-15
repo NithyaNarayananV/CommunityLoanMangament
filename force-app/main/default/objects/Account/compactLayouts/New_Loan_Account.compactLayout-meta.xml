@@ -5,7 +5,7 @@
     <fields>Contact__c</fields>
     <fields>State__c</fields>
     <fields>Loan_Amount__c</fields>
-    <fields>Type</fields>
+    <fields>Type__c</fields>
     <fields>SLAExpirationDate__c</fields>
     <fields>Balance_Loan__c</fields>
     <fields>Interest_Paid__c</fields>
