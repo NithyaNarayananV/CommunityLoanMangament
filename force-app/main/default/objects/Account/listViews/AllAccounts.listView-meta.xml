@@ -3,7 +3,7 @@
     <fullName>AllAccounts</fullName>
     <columns>ACCOUNT.NAME</columns>
     <columns>Contact__c</columns>
-    <columns>ACCOUNT.Type__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
     <columns>Loan_Amount__c</columns>
     <columns>Balance_Loan__c</columns>
     <columns>ACCOUNT.CREATED_DATE</columns>

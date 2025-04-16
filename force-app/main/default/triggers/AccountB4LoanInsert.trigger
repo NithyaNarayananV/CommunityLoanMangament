@@ -19,15 +19,10 @@ trigger AccountB4LoanInsert on Account (before insert,before update) {
             if( Ac.Loan_Date__c.addDays(30) > Ac.SLAExpirationDate__c) 
                 Ac.SLAExpirationDate__c.addError('Repay Date Should be atlease 30 days From Loan Date');
             
-            /*try{
-
-                Ac.ParentId ='001Ig000008GpxKIAS';
-            }
-            catch(Exception e){
-                System.debug('This Message is expected because of the validation rule');
-            }
-        */
-            if (Ac.Type__c == 'Regular_Loan') {
+                //NEED TO ADD A PARENT ID LATER
+                //Ac.ParentId ='001Ig000008GpxKIAS';
+        
+            if (Ac.Type == 'Regular_Loan') {
                 Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20;
             } else {
                 Ac.Advance_Deduction__c = 0;

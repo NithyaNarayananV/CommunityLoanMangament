@@ -1,6 +1,6 @@
 trigger AccountAfterLoanInsert on Account (After insert) {
     /*
-     * 	1) 	ReNaming Account based on Type__c of loan.
+     * 	1) 	ReNaming Account based on type of loan.
      * 
      * 	2)	Setting 10 months Repayment date for RL Loan
      * 
@@ -8,14 +8,14 @@ trigger AccountAfterLoanInsert on Account (After insert) {
      * 
      */    
     
-    Account Ac = [select  Balance_Loan__c,Loan_Amount__c,CreatedDate,Active__c, Loan_Date__c, Type__c,Advance_Deduction__c,Contact__c from Account WHERE Id IN :Trigger.new];
+    Account Ac = [select  Balance_Loan__c,Loan_Amount__c,CreatedDate,Active__c, Loan_Date__c, Type,Advance_Deduction__c,Contact__c from Account WHERE Id IN :Trigger.new];
     String ContactId = ''+Ac.get('Contact__c');
     Contact Cc = Database.query('Select Name, Loan__c from Contact WHERE Id  = \'' +ContactId +'\'');
 
     //+++++++++++++++++1111111111111111111112222222+++++++++++++++++++++++++++++++++
     datetime myDate = Ac.Loan_Date__c;
     Ac.Balance_Loan__c=Ac.Loan_Amount__c;
-    if(Ac.Type__c == 'Regular_Loan')
+    if(Ac.Type == 'Regular_Loan')
     {
         Ac.Name= 'RL '+Cc.get('Name') + ' : ₹' + Ac.Loan_Amount__c;// + ' '+myDate  ;//Ac.Account_Id__c;
         
@@ -23,7 +23,7 @@ trigger AccountAfterLoanInsert on Account (After insert) {
         Ac.SLAExpirationDate__c = date.newinstance(myDate.year(),myDate.month()+10,myDate.day());
         //------------------------------222222222222222222222222222222222222222222----------------------------------------
     }
-    else if(Ac.Type__c == 'Annual_Loan')
+    else if(Ac.Type == 'Annual_Loan')
         Ac.Name= 'AL '+Cc.get('Name') + ' : ₹' + Ac.Loan_Amount__c;
     else
         Ac.Name= 'UL '+Cc.get('Name') + ' : ₹' + Ac.Loan_Amount__c;

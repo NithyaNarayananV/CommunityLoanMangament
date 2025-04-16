@@ -5,7 +5,7 @@
         <formula>(&quot;New Loan&quot;)</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>Type__c</field>
+        <field>Type</field>
         <literalValue>Short_Loan</literalValue>
     </fieldOverrides>
     <label>Short Loan</label>

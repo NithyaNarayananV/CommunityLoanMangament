@@ -8,7 +8,7 @@ trigger RepayRecordCreation on Loan__c (after insert) {
         if (LoanC.state__C != 'Upcoming' && LoanC.state__C != 'Due'  && LoanC.state__C != 'OverDue' )
         {
             String AccountId = ''+LoanC.get('Loan_Account__c');
-            Account Ac = Database.query('select Active__c,Loan_Date__c,Balance_Loan__c,Interest_Paid__c,state__C,Type__c ,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
+            Account Ac = Database.query('select Active__c,Loan_Date__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
             String ContactId = ''+Ac.get('Contact__c');
             Contact C = Database.query('select id, Loan__c,Lastname from Contact WHERE Id  = \'' +ContactId+'\'');
             
@@ -22,19 +22,19 @@ trigger RepayRecordCreation on Loan__c (after insert) {
             if (LoanC.Action__c == 'Interest')
             {
                 LoanC.Name= 'Interest Pay - '+C.get('Lastname') ;//Ac.Account_Id__c;
-                if(Ac.Type__c =='Regular_Loan')
+                if(Ac.Type =='Regular_Loan')
                 LoanC.Repay_Date__c = Ac.Loan_Date__c;
                 System.debug('Else |  Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;');
-                //if(Ac.Type__c  =='Annual_Loan')
+                //if(Ac.Type  =='Annual_Loan')
                 //LoanC.Repay_Amount__c.addError('Amount Invalid');
                 Ac.Interest_Paid__c +=LoanC.Repay_Amount__c;
                 Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;
                 system.debug(Ac.Advance_Deduction__c);
 
-                System.debug('Before | Ac.Type__c == Regular_Loan | '+Ac.Type__c);
-                if (Ac.Type__c == 'Regular_Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
+                System.debug('Before | Ac.Type == Regular_Loan | '+Ac.Type);
+                if (Ac.Type == 'Regular_Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
                 {
-                    System.debug('Ac.Type__c == Regular_Loan');
+                    System.debug('Ac.Type == Regular_Loan');
                     // 10 New Records Creation for Installment of the Loan
                     list<Loan__c> InstallmentList = new list<Loan__c>();
                     Date today = Ac.Loan_Date__c;
@@ -86,14 +86,14 @@ trigger RepayRecordCreation on Loan__c (after insert) {
             if (LoanC.Action__c == 'Repay' || (LoanC.Action__c == 'Installment' && LoanC.state__C != 'Upcoming'))
             {
                 System.debug('LoanC.Action__c == Repay || LoanC.Action__c == Installment');
-                if (Ac.Type__c =='Regular_Loan')
+                if (Ac.Type =='Regular_Loan')
                 {
                     LoanC.Name= 'Installment '+C.get('Lastname') ;//Ac.Account_Id__c;
                     Ac.Balance_Loan__c -= LoanC.Repay_Amount__c;
                     //Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;//=========
                     C.Loan__c  -=LoanC.Repay_Amount__c;
                 }
-                else if(Ac.Type__c  =='Annual_Loan')
+                else if(Ac.Type  =='Annual_Loan')
                 {
                     LoanC.Name= 'RePay '+C.get('Lastname') ;
                     Ac.Balance_Loan__c -=LoanC.Repay_Amount__c;

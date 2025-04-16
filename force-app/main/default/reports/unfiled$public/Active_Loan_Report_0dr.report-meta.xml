@@ -7,7 +7,7 @@
         <field>Account.Contact__c</field>
     </columns>
     <columns>
-        <field>Account.TYPE__c</field>
+        <field>TYPE</field>
     </columns>
     <columns>
         <field>Account.State__c</field>

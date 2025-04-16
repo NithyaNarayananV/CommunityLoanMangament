@@ -8,5 +8,39 @@
         <plural>true</plural>
         <value>Repay Loans</value>
     </caseValues>
+    <layouts>
+        <layout>Loan Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Loan Details --></label>
+            <section>Loan Details</section>
+        </sections>
+        <sections>
+            <label><!-- Repay --></label>
+            <section>Repay</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Repay</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- New Repay --></label>
+        <name>New_Repay</name>
+    </quickActions>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Repay amount cannot cannot exceed Balance Amount --></errorMessage>
+        <name>Repay_Exceed_Check</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Pay_Installment --></label>
+        <name>Pay_Installment</name>
+    </webLinks>
 </CustomObjectTranslation>

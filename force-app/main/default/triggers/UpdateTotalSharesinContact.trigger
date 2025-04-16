@@ -31,14 +31,9 @@ trigger UpdateTotalSharesinContact on Shares__c (after insert) {
                 update C;    
             }
             try{
-                List<AggregateResult> I = [Select Count(id) from Account WHERE Name = 'Shares Amount'];
-                if((Integer)I[0].get('expr0') > 0)
-                {Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type__c ,Contact__c,Advance_Deduction__c from Account WHERE Name = 'Shares Amount' limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
-                //if(A!= null)
-                
-                    A.Loan_Amount__c += S.SharesCount__c * 50;
-                    update A;
-                }
+                Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c from Account WHERE Name = 'Shares Amount' limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
+                A.Loan_Amount__c += S.SharesCount__c * 50;
+                update A;
             }
             catch(DmlException e) {
                 System.debug('The following exception has occurred: ' + e.getMessage());

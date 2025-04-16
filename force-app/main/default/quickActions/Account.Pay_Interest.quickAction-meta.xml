@@ -6,10 +6,10 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Repay_Amount__c</field>
-        <formula>IF(ISPICKVAL(Account.Type__c , &apos;Annual_Loan&apos;),
+        <formula>IF(ISPICKVAL(Account.Type , &apos;Annual_Loan&apos;),
 (Account.Balance_Loan__c)*0.24,
 
-IF(ISPICKVAL(Account.Type__c , &apos;Regular_Loan&apos;),
+IF(ISPICKVAL(Account.Type , &apos;Regular_Loan&apos;),
 Account.Balance_Loan__c/10,
 Account.Balance_Loan__c))</formula>
     </fieldOverrides>

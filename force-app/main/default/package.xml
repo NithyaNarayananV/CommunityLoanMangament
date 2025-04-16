@@ -29,6 +29,10 @@
         <name>Flow</name>
     </types>
     <types>
+        <members>AccountType</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
         <members>net_promoter_score</members>
         <name>Flow</name>
     </types>

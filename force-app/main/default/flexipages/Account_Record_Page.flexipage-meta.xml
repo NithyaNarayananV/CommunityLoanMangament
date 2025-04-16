@@ -11,7 +11,7 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annual_Loan</rightValue>
                                 </criteria>
@@ -53,7 +53,7 @@
                                     <rightValue>Closed</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annual_Loan</rightValue>
                                 </criteria>
@@ -166,7 +166,7 @@
                 <identifier>lst_dynamicRelatedList</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type__C}</leftValue>
+                        <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Annual_Loan</rightValue>
                     </criteria>
@@ -243,7 +243,7 @@
                 <identifier>lst_dynamicRelatedList2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
+                        <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Regular_Loan</rightValue>
                     </criteria>
@@ -291,7 +291,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Type__c</fieldItem>
+                <fieldItem>Record.Type</fieldItem>
                 <identifier>RecordTypeField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -333,6 +333,12 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Loan_Date__c</fieldItem>
                 <identifier>RecordLoan_Date__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f4000051-7b83-4d71-9f4d-2ff3ea130590</name>
@@ -454,7 +460,7 @@
                     <visibilityRule>
                         <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                         <criteria>
-                            <leftValue>{!Record.Type__c}</leftValue>
+                            <leftValue>{!Record.Type}</leftValue>
                             <operator>EQUAL</operator>
                             <rightValue>Regular_Loan</rightValue>
                         </criteria>
@@ -475,7 +481,7 @@
                     <visibilityRule>
                         <booleanFilter>1 AND 2</booleanFilter>
                         <criteria>
-                            <leftValue>{!Record.Type__c}</leftValue>
+                            <leftValue>{!Record.Type}</leftValue>
                             <operator>EQUAL</operator>
                             <rightValue>Annual_Loan</rightValue>
                         </criteria>
