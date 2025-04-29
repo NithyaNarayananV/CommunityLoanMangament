@@ -1,4 +1,5 @@
 public class AccountHandler {
+
     public static Account insertNewAccount(String str1)
     {
         Account acct = new Account(Name=str1);
@@ -8,7 +9,7 @@ public class AccountHandler {
             return null;
         }
         return acct;
-          ////
+
     }
 
 }
