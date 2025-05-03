@@ -786,7 +786,7 @@
                             <value>Loan_Amount__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>ACCOUNT.TYPE</value>
+                            <value>ACCOUNT.Type__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>State__c</value>
