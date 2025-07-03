@@ -17,7 +17,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Balance_Loan__c</field>
+                <field>Balance__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>

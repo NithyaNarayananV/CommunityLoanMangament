@@ -9,7 +9,7 @@ trigger Share_ReduceTotalShareValueAfterDeletionOfShares on Shares__C (before de
     
     C.Total_Shares__c -= S.SharesCount__c;
     C.Share_Value__c = C.Total_Shares__c *  50;
-    Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type__c ,Contact__c,Advance_Deduction__c from Account WHERE Id  = '0012w00001Kv7dcAAB']; 
+    Account A = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type__c ,Contact__c,Advance_Deduction__c from Account WHERE Id  = '0012w00001Kv7dcAAB']; 
     A.Loan_Amount__c -= S.SharesCount__c * 50;
     update A;
     if( C.Total_Shares__c <=0)    

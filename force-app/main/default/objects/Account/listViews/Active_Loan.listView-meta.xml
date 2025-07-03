@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AllAccounts</fullName>
+    <fullName>Active_Loan</fullName>
     <columns>ACCOUNT.NAME</columns>
     <columns>Contact__c</columns>
     <columns>ACCOUNT.TYPE</columns>
@@ -9,5 +9,10 @@
     <columns>ACCOUNT.CREATED_DATE</columns>
     <columns>SLAExpirationDate__c</columns>
     <filterScope>Everything</filterScope>
-    <label>All Accounts</label>
+    <filters>
+        <field>Active__c</field>
+        <operation>equals</operation>
+        <value>Yes</value>
+    </filters>
+    <label>Active Loan</label>
 </ListView>

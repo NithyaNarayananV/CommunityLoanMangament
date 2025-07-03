@@ -7,7 +7,7 @@
         <chartSummaries>
             <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>Account.Balance_Loan__c</column>
+            <column>Account.Balance__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>false</enableHoverLabels>
@@ -27,7 +27,7 @@
     </chart>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>Account.Balance_Loan__c</field>
+        <field>Account.Balance__c</field>
     </columns>
     <currency>INR</currency>
     <filter>

@@ -6,7 +6,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Repay_Amount__c</field>
-        <formula>(Account.Balance_Loan__c)</formula>
+        <formula>(Account.Balance__c)</formula>
     </fieldOverrides>
     <label>Pay Balance</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>

@@ -16,7 +16,7 @@
                                     <rightValue>Annual_Loan</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Balance_Loan__c}</leftValue>
+                                    <leftValue>{!Record.Balance__c}</leftValue>
                                     <operator>GT</operator>
                                     <rightValue>0</rightValue>
                                 </criteria>
@@ -311,8 +311,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Balance_Loan__c</fieldItem>
-                <identifier>RecordBalance_Loan__cField</identifier>
+                <fieldItem>Record.Balance__c</fieldItem>
+                <identifier>RecordBalance__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -321,8 +321,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Interest_Paid__c</fieldItem>
-                <identifier>RecordInterest_Paid__cField</identifier>
+                <fieldItem>Record.Interest_Paid_A__c</fieldItem>
+                <identifier>RecordInterest_Paid_A__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -486,7 +486,7 @@
                             <rightValue>Annual_Loan</rightValue>
                         </criteria>
                         <criteria>
-                            <leftValue>{!Record.Balance_Loan__c}</leftValue>
+                            <leftValue>{!Record.Balance__c}</leftValue>
                             <operator>GT</operator>
                             <rightValue>0</rightValue>
                         </criteria>

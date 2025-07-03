@@ -206,8 +206,8 @@
         <expression>{!Account_Details.Balance__c}*0.24</expression>
         <scale>2</scale>
     </formulas>
-    <interviewLabel>N Interest Pay {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>N Interest Pay</label>
+    <interviewLabel>NN Interest Pay Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NN Interest Pay Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

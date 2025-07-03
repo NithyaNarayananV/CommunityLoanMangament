@@ -298,7 +298,6 @@
             <label>Paid Late</label>
         </rules>
     </decisions>
-    <description>Introduced Closed On time and Closed Late for Loan Account Records</description>
     <environments>Default</environments>
     <formulas>
         <name>PreInstallmentDate</name>
@@ -310,8 +309,8 @@
         <dataType>Date</dataType>
         <expression>Today()</expression>
     </formulas>
-    <interviewLabel>InstallemtFlow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>InstallemtFlow</label>
+    <interviewLabel>NN Installment Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NN Installment Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

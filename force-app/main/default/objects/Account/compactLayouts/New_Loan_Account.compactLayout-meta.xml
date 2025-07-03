@@ -7,7 +7,7 @@
     <fields>Loan_Amount__c</fields>
     <fields>Type</fields>
     <fields>SLAExpirationDate__c</fields>
-    <fields>Balance_Loan__c</fields>
-    <fields>Interest_Paid__c</fields>
+    <fields>Balance__c</fields>
+    <fields>Advance_Deduction__c</fields>
     <label>New Loan Account</label>
 </CompactLayout>

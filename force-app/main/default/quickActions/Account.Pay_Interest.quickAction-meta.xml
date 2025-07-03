@@ -7,11 +7,11 @@
     <fieldOverrides>
         <field>Repay_Amount__c</field>
         <formula>IF(ISPICKVAL(Account.Type , &apos;Annual_Loan&apos;),
-(Account.Balance_Loan__c)*0.24,
+(Account.Balance__c)*0.24,
 
 IF(ISPICKVAL(Account.Type , &apos;Regular_Loan&apos;),
-Account.Balance_Loan__c/10,
-Account.Balance_Loan__c))</formula>
+Account.Balance__c/10,
+Account.Balance__c))</formula>
     </fieldOverrides>
     <label>Pay Interest</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>

@@ -31,7 +31,7 @@ trigger UpdateTotalSharesinContact on Shares__c (after insert) {
                 update C;    
             }
             try{
-                Account A = [Select Loan_Amount__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c from Account WHERE Name = 'Shares Amount' limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
+                Account A = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Contact__c,Advance_Deduction__c from Account WHERE Name = 'Shares Amount' limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
                 A.Loan_Amount__c += S.SharesCount__c * 50;
                 update A;
             }

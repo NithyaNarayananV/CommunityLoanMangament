@@ -6,9 +6,9 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
         {
             //LoanC.Name='Repay';
             String AccountId = ''+LoanC.get('Loan_Account__c');
-            Account Ac = Database.query('select Active__c,Balance_Loan__c,state__C,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
-            Ac.Balance_Loan__c -= LoanC.Repay_Amount__c;
-            if(Ac.Balance_Loan__c < 0 || LoanC.Repay_Amount__c <0)
+            Account Ac = Database.query('select Active__c,Balance__c,state__C,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
+            //Ac.Balance__c -= LoanC.Repay_Amount__c;
+            if(Ac.Balance__c < 0 || LoanC.Repay_Amount__c <0)
             {
                LoanC.Repay_Amount__c.addError('Amount Invalid');
             }            //Repay_Amount__c 
@@ -16,18 +16,18 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
         }
         /*
         String AccountId = ''+LoanC.get('Loan_Account__c');
-        Account Ac = Database.query('select Active__c,Balance_Loan__c,state__C,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
+        Account Ac = Database.query('select Active__c,Balance__c,state__C,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
         
-        if (Ac.Balance_Loan__c == null)
+        if (Ac.Balance__c == null)
         {
-            Ac.Balance_Loan__c = Ac.Loan_Amount__c;
+            Ac.Balance__c = Ac.Loan_Amount__c;
         }
-        Ac.Balance_Loan__c -= LoanC.Repay_Amount__c;
-        if(Ac.Balance_Loan__c == 0)
+        Ac.Balance__c -= LoanC.Repay_Amount__c;
+        if(Ac.Balance__c == 0)
         {
             Ac.State__C='Closed';
         }
-        else if(Ac.Balance_Loan__c < 0)
+        else if(Ac.Balance__c < 0)
         {
            LoanC.Repay_Amount__c.addError('Not Acceptable');
         }
@@ -59,7 +59,5 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
             system.debug(e);// Process exception here
         }   
         //Loan_Start_date__c
-        */
-         
-    
+        */     
 }

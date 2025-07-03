@@ -4,7 +4,6 @@
     <columns>NAME</columns>
     <columns>Action__c</columns>
     <columns>Loan_Account__c</columns>
-    <columns>Loan_Amount__c</columns>
     <columns>Repay_Amount__c</columns>
     <columns>State__c</columns>
     <columns>PyamentDate__c</columns>

@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Repay_Exceed_Check</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(Repay_Amount__c  &gt;  Balance_Loan__c  || Balance_Loan__c &lt;= 0, true, IF(Repay_Amount__c  &lt;=0,true,false))</errorConditionFormula>
+    <errorConditionFormula>IF(Repay_Amount__c  &gt;  Balance__c  || Balance__c &lt;= 0, true, IF(Repay_Amount__c  &lt;=0,true,false))</errorConditionFormula>
     <errorDisplayField>Repay_Amount__c</errorDisplayField>
     <errorMessage>Repay amount cannot cannot exceed Balance Amount</errorMessage>
 </ValidationRule>

@@ -8,17 +8,14 @@ trigger RepayRecordCreation on Loan__c (after insert) {
         if (LoanC.state__C != 'Upcoming' && LoanC.state__C != 'Due'  && LoanC.state__C != 'OverDue' )
         {
             String AccountId = ''+LoanC.get('Loan_Account__c');
-            Account Ac = Database.query('select Active__c,Loan_Date__c,Balance_Loan__c,Interest_Paid__c,state__C,Type ,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
+            Account Ac = Database.query('select Active__c,Loan_Date__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
             String ContactId = ''+Ac.get('Contact__c');
             Contact C = Database.query('select id, Loan__c,Lastname from Contact WHERE Id  = \'' +ContactId+'\'');
             
             //LoanC.Name= 'R '+C.get('Lastname') ;//Ac.Account_Id__c;
     
             //LoanC.Name='Repay';
-            if (Ac.Balance_Loan__c == null)
-            {	System.debug('Ac.Balance_Loan__c == null');
-                Ac.Balance_Loan__c = Ac.Loan_Amount__c;
-            }
+
             if (LoanC.Action__c == 'Interest')
             {
                 LoanC.Name= 'Interest Pay - '+C.get('Lastname') ;//Ac.Account_Id__c;
@@ -27,7 +24,7 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 System.debug('Else |  Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;');
                 //if(Ac.Type  =='Annual_Loan')
                 //LoanC.Repay_Amount__c.addError('Amount Invalid');
-                Ac.Interest_Paid__c +=LoanC.Repay_Amount__c;
+                //Ac.Interest_Paid_A__c +=LoanC.Repay_Amount__c;
                 Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;
                 system.debug(Ac.Advance_Deduction__c);
 
@@ -89,23 +86,23 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 if (Ac.Type =='Regular_Loan')
                 {
                     LoanC.Name= 'Installment '+C.get('Lastname') ;//Ac.Account_Id__c;
-                    Ac.Balance_Loan__c -= LoanC.Repay_Amount__c;
                     //Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;//=========
                     C.Loan__c  -=LoanC.Repay_Amount__c;
                 }
                 else if(Ac.Type  =='Annual_Loan')
                 {
                     LoanC.Name= 'RePay '+C.get('Lastname') ;
-                    Ac.Balance_Loan__c -=LoanC.Repay_Amount__c;
+                    LoanC.state__C ='Paid On Time';
                     //Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;//=========
 
                     C.Loan__c -=LoanC.Repay_Amount__c;
                 }
             }
             
-            if(Ac.Balance_Loan__c <= 0)
+            if(Ac.Balance__c <= 0)
             {
                 Ac.State__C='Closed';
+                Ac.Active__c = 'No';
             }
             /*Advance_Deduction__c
             //++++++++++++++++++ Adding Amount to Contacts +++++++++++++++++++++++++

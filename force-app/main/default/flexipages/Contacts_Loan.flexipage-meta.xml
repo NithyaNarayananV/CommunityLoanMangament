@@ -777,7 +777,7 @@
                             <value>ACCOUNT.NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Balance_Loan__c</value>
+                            <value>Balance__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Advance_Deduction__c</value>
@@ -925,7 +925,7 @@
                             <value>Loan_Amount__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Balance_Loan__c</value>
+                            <value>Balance__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

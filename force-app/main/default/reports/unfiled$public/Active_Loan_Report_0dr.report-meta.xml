@@ -18,7 +18,7 @@
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>Account.Balance_Loan__c</field>
+        <field>Account.Balance__c</field>
     </columns>
     <columns>
         <field>Account.Security_Contact__c</field>
