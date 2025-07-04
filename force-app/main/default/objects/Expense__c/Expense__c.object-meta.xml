@@ -153,14 +153,15 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Sangam</label>
+    <label>Expense</label>
     <nameField>
-        <displayFormat>S-{0000}</displayFormat>
-        <label>Share Number</label>
+        <displayFormat>{YYYY}{MM}{DD}-{00}</displayFormat>
+        <label>Expense Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Sangam</pluralLabel>
+    <pluralLabel>Expenses</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>
