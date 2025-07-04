@@ -1,21 +1,27 @@
 public with sharing class CNS_LWC_HelperClass {
     @AuraEnabled(cacheable=true)
     public static Decimal getTotalActiveBalanceLoan() {
-        List<Account> accounts = [SELECT Balance__c FROM Account WHERE Type != 'Other'];
-        Decimal totalAmt = 0;
-        for (Account acc : accounts) {
-            totalAmt += acc.Balance__c != null ? acc.Balance__c : 0;
-        }
+        AggregateResult accounts = [SELECT SUM(Balance__c) FROM Account WHERE Type != 'Other'];
+        Decimal totalAmt = (Decimal) accounts.get('expr0');
         return totalAmt;
     }
     @AuraEnabled(cacheable=true)
     public static Decimal getTotalSharesCount() {
-        List<Shares__C> Shares = [SELECT SharesCount__c FROM Shares__C];
-        Decimal total = 0;
-        for (Shares__C sha : Shares) {
-            total += sha.SharesCount__c != null ? sha.SharesCount__c : 0;
-        }
+        AggregateResult result = [SELECT SUM(SharesCount__c) FROM Shares__C];
+        Decimal total = (Decimal) result.get('expr0');
         return total;
+    }
+    @AuraEnabled(cacheable=true)
+    public static Decimal getSangamMembersCount() {
+        AggregateResult result = [SELECT COUNT(Id) FROM Contact WHERE Total_Shares__c >0];
+        Integer totalMembers = (Integer) result.get('expr0');
+        return Decimal.valueOf(totalMembers);
+    }
+    @AuraEnabled(cacheable=true)
+    public static Decimal getSangamTotalExpenses() {
+        AggregateResult result = [SELECT SUM(Amount__c) FROM Expense__c ];
+        Decimal totalSpent = (Decimal) result.get('expr0');
+        return totalSpent;
     }
 }
 

@@ -1,6 +1,15 @@
 <template>
-    <lightning-card title="Total Balance">
-        <div class="slds-p-around_medium">
+    <lightning-card>
+         <div slot="title" class="title-container">
+            <span>Sangam Overview</span>
+            <lightning-button 
+                label="🔃" 
+                onclick={handleRefresh} 
+                variant="neutral" 
+                class="custom-refresh-button">
+            </lightning-button>
+        </div>
+        <div class="slds-p-around_medium">            
             <table class="slds-table slds-table_cell-buffer slds-table_bordered">
                 <tbody>
                     <tr>
@@ -29,8 +38,13 @@
                     </tr>
                     <tr>
                         <th>Total Expenses</th>
-                        <td>₹</td>
+                        <td>= ₹ {totalExpenses}</td>
                     </tr>
+                    <tr>
+                        <th>Total Sangam Members</th>
+                        <td>= {sangamMember}</td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
