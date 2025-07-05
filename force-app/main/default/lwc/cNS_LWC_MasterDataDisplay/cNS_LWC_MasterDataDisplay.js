@@ -3,6 +3,7 @@ import getTotalLoanBalance from '@salesforce/apex/CNS_LWC_HelperClass.getTotalAc
 import getTotalShareCount from '@salesforce/apex/CNS_LWC_HelperClass.getTotalSharesCount';
 import getSangamMemberCount from '@salesforce/apex/CNS_LWC_HelperClass.getSangamMembersCount';
 import getSangamTotalExpenses from '@salesforce/apex/CNS_LWC_HelperClass.getSangamTotalExpenses';
+import getTotalInterestReceived from '@salesforce/apex/CNS_LWC_HelperClass.getTotalInterestReceived';
 
 export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     activeLoanBalance = 0;
@@ -11,6 +12,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     sangamMember = 0;
     totalExpenses =0;
     time;
+    totalIntRec =0;
 
 
     connectedCallback() {
@@ -47,5 +49,10 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
                 this.totalExpenses = result;
             })
             .catch(error => console.error('Total Expense error:', error));
+        getTotalInterestReceived()
+            .then(result => {
+                this.totalIntRec = result;
+            })
+            .catch(error => console.error('Total Int Rec error:', error));
     }
 }

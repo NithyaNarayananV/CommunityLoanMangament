@@ -13,7 +13,7 @@ public with sharing class CNS_LWC_HelperClass {
     }
     @AuraEnabled(cacheable=true)
     public static Decimal getSangamMembersCount() {
-        AggregateResult result = [SELECT COUNT(Id) FROM Contact WHERE Total_Shares__c >0];
+        AggregateResult result = [SELECT COUNT(Id) FROM Contact WHERE Shares__c >0];
         Integer totalMembers = (Integer) result.get('expr0');
         return Decimal.valueOf(totalMembers);
     }
@@ -26,6 +26,12 @@ public with sharing class CNS_LWC_HelperClass {
     @AuraEnabled(cacheable=true)
     public static List<Account> getActiveLoans() {
         return [SELECT Id, Name, Loan_Amount__c, Balance__c FROM Account ];
+    }
+    @AuraEnabled(cacheable=true)
+    public static Decimal getTotalInterestReceived() {
+        AggregateResult interestReceved = [SELECT SUM(Repay_Amount__c) FROM Loan__c WHERE Action__C = 'Interest'];
+        Decimal totalInterestRec = (Decimal) interestReceved.get('expr0');
+        return totalInterestRec;
     }
 }
 

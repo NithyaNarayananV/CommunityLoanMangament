@@ -18,9 +18,11 @@ trigger AccountB4LoanInsert on Account (before insert,before update) {
             System.debug('This trigger is running for an INSERT operation.');
             if( Ac.Loan_Date__c.addDays(30) > Ac.SLAExpirationDate__c) 
                 Ac.SLAExpirationDate__c.addError('Repay Date Should be atlease 30 days From Loan Date');
-            
-                //NEED TO ADD A PARENT ID LATER
-                //Ac.ParentId ='001Ig000008GpxKIAS';
+
+                List<Account> Ids = [Select id from Account where Name = 'Total Accounts' limit 1];
+                ID parentId = Ids.size() > 0 ? Ids[0].Id : null;
+                Ac.ParentId =parentId ; // '001Ig000008GpxKIAS'; //Select Item 4	Total Accounts
+                //Add a condition to check if parentId is null... create a new parent account if it is null
         
             if (Ac.Type == 'Regular_Loan') {
                 Ac.Advance_Deduction__c = Ac.Loan_Amount__c * 0.20;

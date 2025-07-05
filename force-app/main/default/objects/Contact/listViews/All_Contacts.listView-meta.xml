@@ -10,6 +10,7 @@
     <columns>Total_Loaned__c</columns>
     <columns>Pending_Due__c</columns>
     <columns>Share_Value__c</columns>
+    <columns>Shares__c</columns>
     <filterScope>Everything</filterScope>
     <label>All Contacts</label>
 </ListView>
