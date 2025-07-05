@@ -1,16 +1,15 @@
 <template>
-    <lightning-card>
-         <div slot="title" class="title-container">
-            <span>Sangam Overview</span>
-            <lightning-button 
-                label="🔃" 
-                onclick={handleRefresh} 
-                variant="neutral" 
-                class="custom-refresh-button">
-            </lightning-button>
-        </div>
-        <div class="slds-p-around_medium">            
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+    <lightning-card title="Sangam OverView" class="container">
+    <div class="restart" onclick={handleRefresh} 
+        style="margin-left: 20px; margin-right: 20px; 
+        cursor: pointer; padding: 2px; display: flex; 
+        justify-content: space-between; color: grey;">
+        <span>Last Updated : {time}</span>
+        <span>🔃</span>
+    </div>
+        <div class="slds-p-around_medium" style=" margin-left: 20px; margin-right: 20px; border: 3px solid #000000;">
+            <b><strong>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                 <tbody>
                     <tr>
                         <th>Active Loan Balance</th>
@@ -47,6 +46,7 @@
 
                 </tbody>
             </table>
+            </strong></b>
         </div>
     </lightning-card>
 </template>

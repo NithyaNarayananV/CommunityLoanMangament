@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Active Loans">
+        <lightning-datatable
+            key-field="Id"
+            data={loanRecords}
+            columns={columns}
+            hide-checkbox-column="true">
+        </lightning-datatable>
+    </lightning-card>
+</template>

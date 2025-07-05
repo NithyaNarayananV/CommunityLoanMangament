@@ -23,5 +23,9 @@ public with sharing class CNS_LWC_HelperClass {
         Decimal totalSpent = (Decimal) result.get('expr0');
         return totalSpent;
     }
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getActiveLoans() {
+        return [SELECT Id, Name, Loan_Amount__c, Balance__c FROM Account ];
+    }
 }
 

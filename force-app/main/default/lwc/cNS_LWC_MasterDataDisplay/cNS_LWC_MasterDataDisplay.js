@@ -10,6 +10,8 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     totalSharesValue = 0;
     sangamMember = 0;
     totalExpenses =0;
+    time;
+
 
     connectedCallback() {
         this.fetchAllMetrics();
@@ -20,6 +22,8 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     }
 
     fetchAllMetrics() {
+        const now = new Date();
+        this.time = now.toLocaleTimeString(); // Change format if needed
         getTotalLoanBalance()
             .then(result => {
                 this.activeLoanBalance = result;
