@@ -6,6 +6,11 @@ on:
       - main
     paths:
       - 'force-app/**'
+push:
+    branches:
+      - main
+    paths:
+      - 'force-app/**'
 jobs:
   validate:
     runs-on: ubuntu-latest
