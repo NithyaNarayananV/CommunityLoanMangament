@@ -8,7 +8,6 @@ public class AccountHandler {
             return null;
         }
         return acct;
-          ////
     }
 
 }
