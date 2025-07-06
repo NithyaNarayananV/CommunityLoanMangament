@@ -19,7 +19,7 @@ public with sharing class CNS_LWC_HelperClass {
     }
     @AuraEnabled(cacheable=true)
     public static Decimal getSangamTotalExpenses() {
-        AggregateResult result = [SELECT SUM(Amount__c) FROM Expense__c ];
+        AggregateResult result = [SELECT COUNT(Id) FROM Contact WHERE Shares__c >0];//[SELECT SUM(Amount__c) FROM Expense__c ];
         Decimal totalSpent = (Decimal) result.get('expr0');
         return totalSpent;
     }

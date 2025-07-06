@@ -26,6 +26,16 @@
                 <default>false</default>
                 <label>Interest</label>
             </value>
+            <value>
+                <fullName>Expense</fullName>
+                <default>false</default>
+                <label>Expense</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

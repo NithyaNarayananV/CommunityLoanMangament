@@ -1,33 +1,29 @@
 trigger RepayRecordCreation on Loan__c (after insert) {
-    
     System.debug('Start Loan');
-    list<Loan__c> LoanCList  = [Select CreatedDate, Loan_Account__c,Loan_given_to__c, Action__c, Repay_Amount__c,state__C from Loan__c WHERE Id in :Trigger.new];
-    
+    list<Loan__c> LoanCList  = [Select  Id,  Name, PyamentDate__c, Action__c, Repay_Amount__c, Paid_To__c, Repay_Date__c, LoanerID__c, State__c, Loan_Account__c from Loan__c WHERE Id in :Trigger.new];
     for ( Loan__c LoanC : LoanCList) 
-    {
+    {        
+        if( LoanC.Action__C =='Expense' || LoanC.Action__C == 'Other' )
+        {
+            System.debug('LoanC.Action__C == Expense || LoanC.Action__C == Other');
+            //Expense
+            LoanC.Name= 'Expense - '+LoanC.get('Repay_Amount__c') ;//Ac.Account_Id__c;
+            Update LoanC;
+        }
+        else
         if (LoanC.state__C != 'Upcoming' && LoanC.state__C != 'Due'  && LoanC.state__C != 'OverDue' )
         {
             String AccountId = ''+LoanC.get('Loan_Account__c');
             Account Ac = Database.query('select Active__c,Loan_Date__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Contact__c,Advance_Deduction__c,Loan_Amount__c from Account WHERE Id  = \'' +AccountId +'\'');
             String ContactId = ''+Ac.get('Contact__c');
             Contact C = Database.query('select id, Loan__c,Lastname from Contact WHERE Id  = \'' +ContactId+'\'');
-            
-            //LoanC.Name= 'R '+C.get('Lastname') ;//Ac.Account_Id__c;
-    
-            //LoanC.Name='Repay';
-
-            if (LoanC.Action__c == 'Interest')
-            {
+            if (LoanC.Action__c == 'Interest'){
                 LoanC.Name= 'Interest Pay - '+C.get('Lastname') ;//Ac.Account_Id__c;
                 if(Ac.Type =='Regular_Loan')
                 LoanC.Repay_Date__c = Ac.Loan_Date__c;
                 System.debug('Else |  Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;');
-                //if(Ac.Type  =='Annual_Loan')
-                //LoanC.Repay_Amount__c.addError('Amount Invalid');
-                //Ac.Interest_Paid_A__c +=LoanC.Repay_Amount__c;
                 Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;
                 system.debug(Ac.Advance_Deduction__c);
-
                 System.debug('Before | Ac.Type == Regular_Loan | '+Ac.Type);
                 if (Ac.Type == 'Regular_Loan')  // For Regular Loan, Interest is paid only one time : at the begginning.
                 {
@@ -39,13 +35,10 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                     {
                         System.debug('For Loop - '+i);
                         Loan__c Installment = new Loan__c();
-                        
                         Installment.Loan_Account__c = AccountId;
-                        
                         Installment.Action__c = 'Installment';
-                        
                         Installment.Repay_Amount__c = Ac.Loan_Amount__c/10;
-                        Date nextMonthDate = today.addMonths(i+1);                    
+                        Date nextMonthDate = today.addMonths(i+1);
                         // Check for day overflow and adjust the date (e.g., February 30)
                         if (nextMonthDate.day() != today.day()) {
                             Integer daysInNextMonth = Date.daysInMonth(nextMonthDate.year(), nextMonthDate.month());
@@ -66,7 +59,7 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                         else if(Ac.State__C == 'Due' || Installment.state__C == 'Due')
                                 Ac.state__C = 'Due';
                         else
-                            Ac.state__C = 'Upcoming';                        
+                            Ac.state__C = 'Upcoming';
                         System.debug(Ac.state__C);
                     }
                     try {
@@ -78,48 +71,24 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                     system.debug('InstallmentList.size() : '+InstallmentList.size());
                 }
                 system.debug('out of : if (LoanC.Action__c == Interest)');
-                
             }
             if (LoanC.Action__c == 'Repay' || (LoanC.Action__c == 'Installment' && LoanC.state__C != 'Upcoming'))
             {
                 System.debug('LoanC.Action__c == Repay || LoanC.Action__c == Installment');
-                if (Ac.Type =='Regular_Loan')
-                {
+                if (Ac.Type =='Regular_Loan'){
                     LoanC.Name= 'Installment '+C.get('Lastname') ;//Ac.Account_Id__c;
-                    //Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;//=========
                     C.Loan__c  -=LoanC.Repay_Amount__c;
                 }
-                else if(Ac.Type  =='Annual_Loan')
-                {
+                else if(Ac.Type  =='Annual_Loan'){
                     LoanC.Name= 'RePay '+C.get('Lastname') ;
                     LoanC.state__C ='Paid On Time';
-                    //Ac.Advance_Deduction__c +=LoanC.Repay_Amount__c;//=========
-
                     C.Loan__c -=LoanC.Repay_Amount__c;
                 }
             }
-            
-            if(Ac.Balance__c <= 0)
-            {
+            if(Ac.Balance__c <= 0){
                 Ac.State__C='Closed';
                 Ac.Active__c = 'No';
             }
-            /*Advance_Deduction__c
-            //++++++++++++++++++ Adding Amount to Contacts +++++++++++++++++++++++++
-            String AcNo = ''+LoanC.get('Loan_Account__c');
-            Integer NetAmount = 0;
-            Account AcDetail  = Database.query('select CreatedDate,ContactName__c,Loan_Start_date__c, Action__c, Loan_Amount__c, Repay_Amount__c from Loan__c WHERE Id IN :'+AcNo);
-            if(LoanC.get('Action__c') == 'Installment')
-            LoanC.Repay_Amount__c= AcDetail.Loan_Amount__c/10; // NetAmount += Integer.valueOf(LoanC[0].get('Loan_Amount__c'));
-            
-            //else if(LoanC.get('Action__c') == 'Installment')
-            //    NetAmount -= Integer.valueOf(LoanC.get('Repay_Amount__c'));
-            //LoanUser.Loan__c +=NetAmount;
-            
-
-            //LoanC[0].Loan_Start_date__c = date.valueOf(LoanC[0].get('CreatedDate'));
-            //Loan_Start_date__c
-            */
             try {
                 //update LoanUser;\system.debug(Ac.Advance_Deduction__c);
                 System.debug(Ac.Advance_Deduction__c);
@@ -127,9 +96,9 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 Update Ac;
                 Update C;
                 Update LoanC;
-            } catch (DmlException e) {
+            }catch (DmlException e) {
                 system.debug(e);// Process exception here
-            }//Loan_Start_date__c
+            }
         }
     }
 }

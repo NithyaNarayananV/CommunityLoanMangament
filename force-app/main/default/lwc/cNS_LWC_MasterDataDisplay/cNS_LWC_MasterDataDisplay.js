@@ -35,7 +35,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
         getTotalShareCount()
             .then(result => {
                 this.totalShares = result;
-                this.totalSharesValue = this.totalShares * 5;
+                this.totalSharesValue = this.totalShares * 50;
             })
             .catch(error => console.error('Shares count error:', error));
 
