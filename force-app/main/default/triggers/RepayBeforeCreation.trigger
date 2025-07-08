@@ -15,45 +15,30 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
                 LoanC.Repay_Amount__c.addError('Amount Invalid');
                 }            //Repay_Amount__c 
             }
-            if( LoanC.Action__C =='Expense'  )
+            if( LoanC.Action__C =='Expense' )
             {
-                System.debug('LoanC.Action__C == Expense');
-                //Expense
-                LoanC.Name= 'Expense - '+LoanC.get('Repay_Amount__c') ;//Ac.Account_Id__c;
-                // update the "Expense" Account with the Expense Amount
-                //	Expenses
+                System.debug('LoanC.Action__C == Expense');                //Expense
+                LoanC.Name= ''+LoanC.Action__C +' - '+LoanC.get('Repay_Amount__c') ;//Ac.Account_Id__c;
                 try{
                     String AccountName = 'Expenses Account';
-                    List<Account> ExpenseAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE Name = :AccountName limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
-                    if(ExpenseAccountList.size() == 0) {
-                        id ExpenseAID = (ID)DefaultRecord.AccountCreate(AccountName);
-                        LoanC.Loan_Account__c = ExpenseAID;
-                        //ShareAccountList.add(new Account(Name = AccountName, Loan_Amount__c = 0, Type__C = 'Other', Type = 'Other', Description = 'This is a parent account for all share applications.',  Interest_Paid_A__c = 0, state__C = 'Active', Contact__c = ID, Advance_Deduction__c = 0));
-                        ExpenseAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE ID = :ExpenseAID limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
-                    }
-                    if(ExpenseAccountList.size() > 0 ){
-                        ExpenseAccountList[0].Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalExpenses(); // As singlevalue of share is equvalent of ₹50/-
-                        update ExpenseAccountList;
-                    }
+                    LoanC.Loan_Account__c = DefaultRecord.accountFetch(AccountName);
+                    //AccountName = 'Donation Account';
+                    //LoanC.Loan_Account__c = DefaultRecord.accountFetch(AccountName);                   
                 }catch(DmlException e) {
                     System.debug('The following exception has occurred: ' + e.getMessage());
                 }
+            }
+            if(  LoanC.Action__C =='Donation' ){
+                System.debug('LoanC.Action__C == Donation');                //Expense
+                LoanC.Name= ''+LoanC.Action__C +' - '+LoanC.get('Repay_Amount__c') ;//Ac.Account_Id__c;
                 try{
-                    String AccountName = 'Donation Account';
-                    List<Account> ExpenseAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE Name = :AccountName limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
-                    if(ExpenseAccountList.size() == 0) {
-                        id ExpenseAID = (ID)DefaultRecord.AccountCreate(AccountName);
-                        //ShareAccountList.add(new Account(Name = AccountName, Loan_Amount__c = 0, Type__C = 'Other', Type = 'Other', Description = 'This is a parent account for all share applications.',  Interest_Paid_A__c = 0, state__C = 'Active', Contact__c = ID, Advance_Deduction__c = 0));
-                        ExpenseAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE ID = :ExpenseAID limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
-                    }
-                    if(ExpenseAccountList.size() > 0 ){
-                        ExpenseAccountList[0].Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalDonation(); // As singlevalue of share is equvalent of ₹50/-
-                        update ExpenseAccountList;
-                    }
+                    String AccountName = 'Expenses Account';
+                    //LoanC.Loan_Account__c = DefaultRecord.accountFetch(AccountName);
+                    AccountName = 'Donation Account';
+                    LoanC.Loan_Account__c = DefaultRecord.accountFetch(AccountName);                   
                 }catch(DmlException e) {
                     System.debug('The following exception has occurred: ' + e.getMessage());
                 }
-                //Update LoanC;
             }
         
     
