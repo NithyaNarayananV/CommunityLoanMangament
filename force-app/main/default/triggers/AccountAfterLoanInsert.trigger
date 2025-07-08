@@ -59,5 +59,6 @@ trigger AccountAfterLoanInsert on Account (After insert) {
         Update Cc;
         
         //------------------------------------33333333333333333333333-----------------------------        
+        
     } 
 }

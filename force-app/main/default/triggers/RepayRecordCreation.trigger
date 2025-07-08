@@ -110,5 +110,7 @@ trigger RepayRecordCreation on Loan__c (after insert) {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }
         Update LoanC;
+ 
+        DefaultRecord.accountRefresh();
     }
 }
