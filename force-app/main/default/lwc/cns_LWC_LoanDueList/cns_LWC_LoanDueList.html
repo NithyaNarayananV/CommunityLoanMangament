@@ -1,10 +1,43 @@
 <template>
+    <lightning-card > 
+        <div style="text-align: center; 
+            color: #ff5858; 
+            background-color: #f8b329; 
+            padding: 10px; 
+            margin : 10px;
+            font-size: 16px;
+            font-weight: bold;">
+            <lightning-button style="margin: 2px" label="Add Expenses"  onclick={handleClickAddExpense}></lightning-button>
+            <lightning-button style="margin: 2px" label="Add Donations" onclick={handleClickAddDonation}></lightning-button>
+            <!--lightning-button style="margin: 2px" label="*Add Regular Loan" onclick={handleClickAddRL}></lightning-button>
+            <lightning-button style="margin: 2px" label="*Add Annual Loan" onclick={handleClickAddAL}></lightning-button>
+            <lightning-button style="margin: 2px" label="*Add Repay Loan" onclick={handleClickAddRepayLoan}></lightning-button>
+            <lightning-button style="margin: 2px" label="*Add Interest"  onclick={handleClickAddInterest}></lightning-button>
+            <lightning-button style="margin: 2px" label="*Add Installment" onclick={handleClickAddInstallment}></lightning-button>
+             
+            <lightning-button label="New Contact - Annual Loan" onclick={handleNewContact}></lightning-button-->
+            <br if:true={showFlow}>
+            <br if:true={showFlow}>
+            <template if:true={showFlow} style=" margin-left: 20px; margin-right: 20px; border: 3px solid #000000; background-color: #4babff;">
+                <lightning-flow flow-api-name="Expense_Record_Creation"    flow-input-variables={inputVariables}  onstatuschange={handleStatusChange}></lightning-flow>
+            </template>
+            <div style=" color: #000000;" if:true={showCreatedExpenseRecord}>
+               <Strong>Expense Record Successfully Created!</Strong> 
+            </div>
+            <div style=" color: #000000;" if:true={showCreatedDonationRecord}>
+               <Strong>Donation Record Successfully Created!</Strong> 
+            </div>
+        </div>
+    </lightning-card>
+    <br>
+    <br>
+
     <lightning-card title="Active Loans">
-        <lightning-datatable
+        <!--lightning-datatable
             key-field="Id"
             data={loanRecords}
             columns={columns}
             hide-checkbox-column="true">
-        </lightning-datatable>
+        </lightning-datatable-->
     </lightning-card>
 </template>

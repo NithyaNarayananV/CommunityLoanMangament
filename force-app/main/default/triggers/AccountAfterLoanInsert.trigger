@@ -38,12 +38,15 @@ trigger AccountAfterLoanInsert on Account (After insert) {
             Ac.Name= 'UL '+Cc.get('Name') + ' : ₹' + Ac.Loan_Amount__c;
 
         //+++++++++++++++++++++++++++4444444444444444444444444444444444++++++++++++++++++++++++++++++++++++++++
-        String AccountNameTotalAccount = 'Total Accounts';
+        String AccountNameTotalAccount = 'Loan Accounts';
         List<Account> Ids = [Select id from Account where Name = :AccountNameTotalAccount limit 1];
         ID parentId = Ids.size() > 0 ? (id)Ids[0].get('Id') : DefaultRecord.AccountCreate(AccountNameTotalAccount);
+        Ids = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE ID = :parentId limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
+
         Ac.ParentId =parentId ; // '001Ig000008GpxKIAS'; //Select Item 4	Total Accounts
         //Add a condition to check if parentId is null... create a new parent account if it is null
-            
+        Ids[0].Loan_Amount__c = CNS_LWC_HelperClass.getTotalActiveBalanceLoan(); // As singlevalue of share is equvalent of ₹50/-
+        update Ids[0];   
         //------------------------------4444444444444444444444444444444444444444444----------------------------------------
         update Ac;
         //--------------------------------11111111111111111111111111111112222------------------------------------

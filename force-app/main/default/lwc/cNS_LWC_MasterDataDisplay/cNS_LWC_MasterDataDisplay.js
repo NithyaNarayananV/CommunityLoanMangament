@@ -13,6 +13,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     totalExpenses =0;
     time;
     totalIntRec =0;
+    availableBalance=0;
 
 
     connectedCallback() {
@@ -24,6 +25,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     }
 
     fetchAllMetrics() {
+        this.availableBalance=0;
         const now = new Date();
         this.time = now.toLocaleTimeString(); // Change format if needed
         getTotalLoanBalance()
@@ -36,6 +38,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
             .then(result => {
                 this.totalShares = result;
                 this.totalSharesValue = this.totalShares * 50;
+                this.availableBalance += this.totalSharesValue;
             })
             .catch(error => console.error('Shares count error:', error));
 
@@ -47,12 +50,16 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
         getSangamTotalExpenses()
             .then(result => {
                 this.totalExpenses = result;
+                this.availableBalance -= this.totalExpenses;
             })
+            
             .catch(error => console.error('Total Expense error:', error));
         getTotalInterestReceived()
             .then(result => {
                 this.totalIntRec = result;
+                this.availableBalance +=this.totalIntRec;
             })
             .catch(error => console.error('Total Int Rec error:', error));
+            //this.availableBalance = this.activeLoanBalance + this.totalSharesValue - this.totalExpenses + this.totalIntRec;
     }
 }

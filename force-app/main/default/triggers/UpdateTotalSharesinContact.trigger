@@ -29,7 +29,7 @@ trigger UpdateTotalSharesinContact on Shares__c (after insert) {
             String AccountName = 'Share Amount';
             List<Account> ShareAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE Name = :AccountName limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
             if(ShareAccountList.size() == 0) {
-                id ShareAID = (ID)DefaultRecord.AccountCreate('Share Accounts');
+                id ShareAID = (ID)DefaultRecord.AccountCreate(AccountName);
                 //ShareAccountList.add(new Account(Name = AccountName, Loan_Amount__c = 0, Type__C = 'Other', Type = 'Other', Description = 'This is a parent account for all share applications.',  Interest_Paid_A__c = 0, state__C = 'Active', Contact__c = ID, Advance_Deduction__c = 0));
                 ShareAccountList = [Select Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE ID = :ShareAID limit 1 ];//Id  = '0012w00001Kv7dcAAB']; 
             }
