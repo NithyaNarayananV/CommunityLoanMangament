@@ -1,5 +1,5 @@
 trigger Share_ReduceTotalShareValueAfterDeletionOfShares on Shares__C (before delete) {
-
+/*
     Shares__c S = [Select Id, ContactName__c, SharesCount__c, Details__c, Member_Number__c from Shares__c where Id IN :Trigger.old];
     String ID = ''+S.get('ContactName__c');
     System.debug(S);
@@ -24,5 +24,6 @@ trigger Share_ReduceTotalShareValueAfterDeletionOfShares on Shares__C (before de
     else
 		Update C;
     //Delete S;
+    */
     
 }

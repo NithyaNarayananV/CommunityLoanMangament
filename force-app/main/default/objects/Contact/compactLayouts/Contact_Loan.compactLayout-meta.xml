@@ -7,7 +7,7 @@
     <fields>Birthdate</fields>
     <fields>JoinedDate__c</fields>
     <fields>Loan__c</fields>
-    <fields>Total_Shares__c</fields>
-    <fields>Share_Value__c</fields>
+    <fields>Shares__c</fields>
+    <fields>ShareValue__c</fields>
     <label>Contact Loan</label>
 </CompactLayout>

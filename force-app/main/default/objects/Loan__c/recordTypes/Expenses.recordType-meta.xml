@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expenses</fullName>
+    <active>true</active>
+    <description>to maintain Expenses</description>
+    <label>Expenses</label>
+    <picklistValues>
+        <picklist>Action__c</picklist>
+        <values>
+            <fullName>Donation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Paid_To__c</picklist>
+        <values>
+            <fullName>NN</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>NVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Raja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sangam</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>State__c</picklist>
+        <values>
+            <fullName>Due</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid Late</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paid On Time</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Upcoming</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

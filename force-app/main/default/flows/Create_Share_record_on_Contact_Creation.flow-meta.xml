@@ -10,7 +10,7 @@
         <scale>3</scale>
     </formulas>
     <interviewLabel>Create Share record on COntact Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create Share record on Contact Creation</label>
+    <label>NN Create Share record on Contact Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -35,9 +35,6 @@
         <label>Create Share Record</label>
         <locationX>176</locationX>
         <locationY>323</locationY>
-        <connector>
-            <targetReference>Share_Value</targetReference>
-        </connector>
         <inputAssignments>
             <field>Bought_Date__c</field>
             <value>
@@ -65,19 +62,6 @@
         <object>Shares__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordUpdates>
-        <name>Share_Value</name>
-        <label>Contact - Update Share Value</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>Share_Value__c</field>
-            <value>
-                <elementReference>ShareValue</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

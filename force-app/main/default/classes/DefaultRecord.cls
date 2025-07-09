@@ -43,18 +43,26 @@ public with sharing class DefaultRecord {
         }
         return ReturnId;
     }
+    @future
     public static void accountRefresh(){
         //Getting the Account List again after creation of missing accounts
         List<Account> AccountList = [Select Id,Name, Loan_Amount__c,Balance__c,Interest_Paid_A__c,state__C,Type ,Type__C,Contact__c,Advance_Deduction__c from Account WHERE Type = 'Other' ]; 
         for( Account Acc : AccountList) {
-            if(Acc.Name=='Expenses Account')
-                Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalExpenses(); 
-            else if(Acc.Name=='Donation Account')
-                Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalDonation(); 
-            else if(Acc.Name=='Available Balance')
-                Acc.Loan_Amount__c = 0 + CNS_LWC_HelperClass.getSangamTotalDonation() - CNS_LWC_HelperClass.getSangamTotalExpenses(); 
-            update AccountList;
-        }
+            switch on Acc.Name {
+                when 'Expenses Account' {
+                    Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalExpenses(); 
+                }
+                when 'Donation Account' {
+                    Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalDonation(); 
+                }
+                when 'Available Balance' {
+                    Acc.Loan_Amount__c = 0 + CNS_LWC_HelperClass.getSangamTotalDonation() - CNS_LWC_HelperClass.getTotalActiveBalanceLoan() + (CNS_LWC_HelperClass.getTotalSharesCount()*50) + CNS_LWC_HelperClass.getTotalInterestReceived()- CNS_LWC_HelperClass.getSangamTotalExpenses(); 
+                }
+                when 'Loan Interest' {
+                    Acc.Loan_Amount__c = 0 + CNS_LWC_HelperClass.getTotalInterestReceived();
+                }
+            }
+        } update AccountList;
     }
     public static ID AccountCreate(String accountName) {
         Account acc = new Account();

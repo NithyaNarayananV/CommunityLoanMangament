@@ -1,4 +1,4 @@
-public with sharing class CNS_LWC_HelperClass {
+public class CNS_LWC_HelperClass {
     @AuraEnabled(cacheable=true)
     public static Decimal getTotalActiveBalanceLoan() {
         AggregateResult accounts = [SELECT SUM(Balance__c) FROM Account WHERE Type != 'Other'];

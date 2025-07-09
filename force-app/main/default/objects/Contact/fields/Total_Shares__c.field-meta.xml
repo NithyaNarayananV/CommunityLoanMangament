@@ -3,9 +3,9 @@
     <fullName>Total_Shares__c</fullName>
     <defaultValue>10</defaultValue>
     <externalId>false</externalId>
-    <label>Total Shares</label>
+    <label>X Total Shares</label>
     <precision>18</precision>
-    <required>true</required>
+    <required>false</required>
     <scale>3</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Number</type>

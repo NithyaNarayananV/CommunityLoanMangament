@@ -4,7 +4,6 @@ import getTotalShareCount from '@salesforce/apex/CNS_LWC_HelperClass.getTotalSha
 import getSangamMemberCount from '@salesforce/apex/CNS_LWC_HelperClass.getSangamMembersCount';
 import getSangamTotalExpenses from '@salesforce/apex/CNS_LWC_HelperClass.getSangamTotalExpenses';
 import getTotalInterestReceived from '@salesforce/apex/CNS_LWC_HelperClass.getTotalInterestReceived';
-
 export default class CNS_LWC_MasterDataDisplay extends LightningElement {
     activeLoanBalance = 0;
     totalShares = 0;
@@ -22,6 +21,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
 
     handleRefresh() {
         this.fetchAllMetrics(); // Trigger refresh from the top icon
+        DefaultRecord.accountRefresh();
     }
 
     fetchAllMetrics() {
@@ -31,6 +31,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
         getTotalLoanBalance()
             .then(result => {
                 this.activeLoanBalance = result;
+                this.availableBalance -= this.activeLoanBalance;
             })
             .catch(error => console.error('Loan balance error:', error));
 
@@ -52,7 +53,6 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
                 this.totalExpenses = result;
                 this.availableBalance -= this.totalExpenses;
             })
-            
             .catch(error => console.error('Total Expense error:', error));
         getTotalInterestReceived()
             .then(result => {

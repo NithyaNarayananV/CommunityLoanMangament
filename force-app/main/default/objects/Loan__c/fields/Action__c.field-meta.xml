@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Donation</fullName>
+                <default>false</default>
+                <label>Donation</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

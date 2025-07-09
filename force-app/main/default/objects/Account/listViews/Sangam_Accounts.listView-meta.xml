@@ -7,7 +7,7 @@
     <columns>Loan_Amount__c</columns>
     <columns>Balance__c</columns>
     <columns>ACCOUNT.CREATED_DATE</columns>
-    <columns>SLAExpirationDate__c</columns>
+    <columns>ACCOUNT.LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>ACCOUNT.TYPE</field>

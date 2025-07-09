@@ -12,7 +12,7 @@
     <filters>
         <field>State__c</field>
         <operation>equals</operation>
-        <value>Closed Late,Closed Early,Closed On Time</value>
+        <value>Closed Late,Closed Early,Closed On Time,Closed</value>
     </filters>
     <label>Closed</label>
 </ListView>

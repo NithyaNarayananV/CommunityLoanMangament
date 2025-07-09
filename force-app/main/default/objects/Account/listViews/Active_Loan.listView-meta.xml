@@ -8,6 +8,7 @@
     <columns>Balance__c</columns>
     <columns>ACCOUNT.CREATED_DATE</columns>
     <columns>SLAExpirationDate__c</columns>
+    <columns>PARENT_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Active__c</field>

@@ -2,16 +2,16 @@ trigger RepayRecordCreation on Loan__c (after insert) {
     System.debug('Start Loan');
     list<Loan__c> LoanCList  = [Select  Id,  Name, PyamentDate__c, Action__c, Repay_Amount__c, Paid_To__c, Repay_Date__c, LoanerID__c, State__c, Loan_Account__c from Loan__c WHERE Id in :Trigger.new];
     for ( Loan__c LoanC : LoanCList) 
-    {        
+    {
         if( LoanC.Action__C =='Expense'  ){
             System.debug('LoanC.Action__C == Expense');
             LoanC.Name= 'Expense - '+LoanC.get('Repay_Amount__c') ;
-            Update LoanC;
+            //Update LoanC;
         }
         else if ( LoanC.Action__C =='Donation'){
             System.debug('LoanC.Action__C == Donation');
             LoanC.Name= 'Donation + '+LoanC.get('Repay_Amount__c');
-            Update LoanC;
+            //Update LoanC;
         }
         else if (LoanC.state__C != 'Upcoming' && LoanC.state__C != 'Due'  && LoanC.state__C != 'OverDue' )
         {
@@ -97,20 +97,13 @@ trigger RepayRecordCreation on Loan__c (after insert) {
                 //Ac.Loan_Amount__c +=Ac.Loan_Amount__c; 
                 Update Ac;
                 Update C;
-                Update LoanC;
+                //Update LoanC;
             }catch (DmlException e) {
                 system.debug(e);// Process exception here
             }
         }
-        //Available Balance
-        try{
-            String AccountName = 'Available Balance';
-            ID X = DefaultRecord.accountFetch(AccountName);
-        }catch(DmlException e){
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }
         Update LoanC;
- 
-        DefaultRecord.accountRefresh();
     }
+    DefaultRecord.accountRefresh();
+    System.debug('End Loan');
 }
