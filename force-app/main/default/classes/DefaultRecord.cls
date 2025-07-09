@@ -11,7 +11,7 @@ public with sharing class DefaultRecord {
         id AID = null;
         id ReturnId = null;
         Integer index = 0;
-        Set<String> DefaultAccountNames = new Set<String>{'Expenses Account', 'Donation Account', 'Available Balance','Loan Accounts','Loan Interest','Share Amount'};
+        Set<String> DefaultAccountNames = new Set<String>{'Expenses Account', 'Income Account', 'Available Balance','Loan Accounts','Loan Interest','Share Amount'};
         if(DefaultAccountNames.size() > AccountList.size()) {// not all default accounts are created
             System.debug('not all default accounts are created | '+ DefaultAccountNames.size() + ' > ' + AccountList.size());
             List<String> nameList = new List<String>();
@@ -52,7 +52,7 @@ public with sharing class DefaultRecord {
                 when 'Expenses Account' {
                     Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalExpenses(); 
                 }
-                when 'Donation Account' {
+                when 'Income Account' {
                     Acc.Loan_Amount__c = CNS_LWC_HelperClass.getSangamTotalDonation(); 
                 }
                 when 'Available Balance' {

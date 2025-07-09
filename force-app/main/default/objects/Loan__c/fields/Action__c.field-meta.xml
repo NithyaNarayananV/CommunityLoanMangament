@@ -37,9 +37,9 @@
                 <label>Other</label>
             </value>
             <value>
-                <fullName>Donation</fullName>
+                <fullName>Income</fullName>
                 <default>false</default>
-                <label>Donation</label>
+                <label>Income</label>
             </value>
         </valueSetDefinition>
     </valueSet>

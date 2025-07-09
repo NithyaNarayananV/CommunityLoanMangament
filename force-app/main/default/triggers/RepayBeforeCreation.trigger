@@ -26,11 +26,11 @@ trigger RepayBeforeCreation on Loan__c (before insert) {
                 System.debug('The following exception has occurred: ' + e.getMessage());
             }
         }
-        if(  LoanC.Action__C =='Donation' ){
-            System.debug('LoanC.Action__C == Donation');                //Expense
+        if(  LoanC.Action__C =='Income' ){
+            System.debug('LoanC.Action__C == Income');                //Expense
             LoanC.Name= ''+LoanC.Action__C +' - '+LoanC.get('Repay_Amount__c') ;//Ac.Account_Id__c;
             try{
-                String AccountName = 'Donation Account';
+                String AccountName = 'Income Account';
                 LoanC.Loan_Account__c = DefaultRecord.accountFetch(AccountName);                   
             }catch(DmlException e) {
                 System.debug('The following exception has occurred: ' + e.getMessage());

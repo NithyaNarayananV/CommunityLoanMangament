@@ -7,8 +7,8 @@
             margin : 10px;
             font-size: 16px;
             font-weight: bold;">
-            <lightning-button style="margin: 2px" label="Add Expenses"  onclick={handleClickAddExpense}></lightning-button>
-            <lightning-button style="margin: 2px" label="Add Donations" onclick={handleClickAddDonation}></lightning-button>
+            <lightning-button class ='{ExpenseButtonClass}'  label="Add Expenses"  onclick={handleClickAddExpense}></lightning-button>
+            <lightning-button class ='{IncomeButtonClass}'  label="Add Income" onclick={handleClickAddDonation}></lightning-button>
             <!--lightning-button style="margin: 2px" label="*Add Regular Loan" onclick={handleClickAddRL}></lightning-button>
             <lightning-button style="margin: 2px" label="*Add Annual Loan" onclick={handleClickAddAL}></lightning-button>
             <lightning-button style="margin: 2px" label="*Add Repay Loan" onclick={handleClickAddRepayLoan}></lightning-button>
@@ -25,24 +25,26 @@
                <Strong>Expense Record Successfully Created!</Strong> 
             </div>
             <div style=" color: #000000;" if:true={showCreatedDonationRecord}>
-               <Strong>Donation Record Successfully Created!</Strong> 
+               <Strong>Income Record Successfully Created!</Strong> 
             </div>
         </div>
     </lightning-card>
     <br>
-    <br>
     <div>
-        <strong>
-            Help Desk
-            <br>* To Create a New Member, Click the "New Contact" Button on the Top Right Corner of the Page.
-            <br>* While Creating a New Member, Make sure to add the Initial Shares Purchased in the Total Shares field.
-            <br>* To Buy shares - Goto Contact, slect partifular Contact, and click on the "Buy Shares" Button.
-            <br>* To Add Regular/Annual Loan - Goto Contact, select particular Contact, and in Top Right Corner, click on the "Add Regular Loan" or "Add Annual Loan" Button.
-            <br>* To pay Loan Interest/Repay Loan for Annual Loan - Goto Contact, select particular Contact, goto particlar Loan and in Top Right Corner, click on the "Add Interest" or "Repay Loan" Button.
-            <br>* To Add Installment for Regular Loan - Goto Contact, select particular Contact, goto particlar Loan and in Top Right Corner, click on the "Add Installment" Button.
-            <br>* To Add Expenses/Donations - Click on the respective buttons on in this Page.
-
-        </strong>
+        <div class="slds-box slds-theme_shade slds-p-around_medium">
+            <h2 class="slds-text-heading_medium slds-text-color_success slds-align_absolute-center">
+                <strong>Help Desk Instructions</strong>
+            </h2>
+            <ul class="slds-list_vertical slds-has-dividers_top-space">
+            <li class="slds-item">📌 Click <strong>New Contact</strong> to create a new member.</li>
+            <li class="slds-item">📌 While creating, update the <strong>Total Shares</strong> field with the initial shares purchased.</li>
+            <li class="slds-item">📌 To buy shares, open a Contact and click <strong>Buy Shares</strong>.</li>
+            <li class="slds-item">📌 To add loans, select a Contact and click <strong>Add Regular Loan</strong> or <strong>Add Annual Loan</strong>.</li>
+            <li class="slds-item">📌 For Annual Loan actions, click <strong>Add Interest</strong> or <strong>Repay Loan</strong> on the loan record.</li>
+            <li class="slds-item">📌 For Regular Loan installments, click <strong>Add Installment</strong> on the loan record.</li>
+            <li class="slds-item">📌 To add <strong>Expenses</strong> or <strong>Income</strong>, use the respective buttons on the Help Desk page.</li>
+            </ul>
+        </div>
     </div>
 
     <lightning-card title="Active Loans">

@@ -25,7 +25,7 @@ public class CNS_LWC_HelperClass {
     }
      @AuraEnabled(cacheable=true)
     public static Decimal getSangamTotalDonation() {
-        AggregateResult result = [SELECT SUM(Repay_Amount__c) FROM Loan__c where Action__c ='Donation' and State__c like 'Paid%' ];//[SELECT SUM(Amount__c) FROM Expense__c ];
+        AggregateResult result = [SELECT SUM(Repay_Amount__c) FROM Loan__c where Action__c ='Income' and State__c like 'Paid%' ];//[SELECT SUM(Amount__c) FROM Expense__c ];
         Decimal totalSpent = (Decimal) result.get('expr0');
         return totalSpent!= null?  totalSpent : 0;
     }

@@ -4,31 +4,61 @@ import { NavigationMixin } from 'lightning/navigation';
 import getActiveLoans from '@salesforce/apex/CNS_LWC_HelperClass.getActiveLoans';
 export default class Cns_LWC_LoanDueList extends NavigationMixin(LightningElement) {
     //Flow start
-    showFlow = false;
-    showCreatedExpenseRecord = false;
+    //showFlow = false;
+    showCreatedExpenseRecord = false;    
+    activeButton = '';
+    showFlowE=false;
+    showFlowI=false;
     handleClickAddExpense() {
-        this.inputVariables = [{
+        this.activeButton = 'Ex';
+        if(this.showFlowE) {
+            
+            this.showFlowE = false;
+        }            
+        else{
+            this.showFlowI = false;
+            setTimeout(() => {
+                this.showFlowE = true;
+            }, 10);
+        }
+    }
+    handleClickAddDonation() {
+        this.activeButton = 'In';
+        if(this.showFlowI) 
+            this.showFlowI = false;
+        else{
+            this.showFlowE = false;
+            setTimeout(() => {
+                this.showFlowI = true;
+            }, 10);
+            
+        } 
+    }
+    get inputVariables(){
+        if (this.showFlowE)
+            return  [{
             name: 'IncomeOrExpense',
             type: 'String',
             value: 'Expense'
         }];
-        if(this.showFlow) 
-            this.showFlow = false;
-        else
-            this.showFlow = true;
-        
-    }
-    handleClickAddDonation() {
-        this.inputVariables = [{
+        if (this.showFlowI)
+            return  [{
             name: 'IncomeOrExpense',
             type: 'String',
-            value: 'Donation'
+            value: 'Income'
         }];
-        if(this.showFlow) 
-            this.showFlow = false;
-        else
-            this.showFlow = true;        
     }
+    get showFlow() {
+        return this.showFlowI || this.showFlowE;
+    }
+    get IncomeButtonClass() {
+        return this.activeButton === 'Ex' ? 'slds-button_brand' : 'slds-button_brand';
+    }
+
+    get ExpenseButtonClass() {
+        return this.activeButton === 'In' ? 'slds-button_brand' : 'slds-button_brand';
+    }
+    //    return this.activeButton === 'B' ? 'slds-button_brand' : 'slds-button_neutral slds-button_stretch slds-opacity_50';
     handleStatusChange(event) {
         if (event.detail.status === 'FINISHED') {
             //this.showFlow = false;

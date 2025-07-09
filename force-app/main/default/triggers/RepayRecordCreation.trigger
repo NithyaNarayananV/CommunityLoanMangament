@@ -8,9 +8,9 @@ trigger RepayRecordCreation on Loan__c (after insert) {
             LoanC.Name= 'Expense - '+LoanC.get('Repay_Amount__c') ;
             //Update LoanC;
         }
-        else if ( LoanC.Action__C =='Donation'){
-            System.debug('LoanC.Action__C == Donation');
-            LoanC.Name= 'Donation + '+LoanC.get('Repay_Amount__c');
+        else if ( LoanC.Action__C =='Income'){
+            System.debug('LoanC.Action__C == Income');
+            LoanC.Name= 'Income + '+LoanC.get('Repay_Amount__c');
             //Update LoanC;
         }
         else if (LoanC.state__C != 'Upcoming' && LoanC.state__C != 'Due'  && LoanC.state__C != 'OverDue' )
