@@ -18,3 +18,4 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
 
 ![Alt Text](https://1drv.ms/i/c/290f9410260c74c8/IQQ5GwyM2J_NRqJ9YwkomQGEAQ7TvQmJZfYXficpDKo6XeY?width=1712&height=1825)
+![Flowchart](CommunityBankHomePage.jpeg)
