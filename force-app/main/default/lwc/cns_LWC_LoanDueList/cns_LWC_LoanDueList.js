@@ -52,11 +52,11 @@ export default class Cns_LWC_LoanDueList extends NavigationMixin(LightningElemen
         return this.showFlowI || this.showFlowE;
     }
     get IncomeButtonClass() {
-        return this.activeButton === 'Ex' ? 'slds-button_brand' : 'slds-button_brand';
+        return this.activeButton === 'Ex' ? 'slds-m-left_x-small' : 'slds-m-left_x-small';
     }
 
     get ExpenseButtonClass() {
-        return this.activeButton === 'In' ? 'slds-button_brand' : 'slds-button_brand';
+        return this.activeButton === 'In' ? 'slds-m-left_xx-small' : 'slds-m-left_x-small'; //variant="brand"
     }
     //    return this.activeButton === 'B' ? 'slds-button_brand' : 'slds-button_neutral slds-button_stretch slds-opacity_50';
     handleStatusChange(event) {

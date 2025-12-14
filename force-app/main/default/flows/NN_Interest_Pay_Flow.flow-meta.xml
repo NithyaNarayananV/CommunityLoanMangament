@@ -18,6 +18,38 @@
             <targetReference>Loan_Type</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Paid_Late_Assignment</name>
+        <label>Paid Late Assignment</label>
+        <locationX>182</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>PaidState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Paid Late</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_or_Yearly_1st_or_not</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Paid_on_Time_Assignment</name>
+        <label>Paid on Time Assignment</label>
+        <locationX>974</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>PaidState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Paid On Time</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_or_Yearly_1st_or_not</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -53,7 +85,7 @@
         <name>Monthly_or_Yearly_1st_or_not</name>
         <label>Monthly or Yearly | 1st or not</label>
         <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
         </defaultConnector>
@@ -105,7 +137,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Next_Month_Interest_Paid</targetReference>
+                <targetReference>Next_Month_Interest_Paid_Late</targetReference>
             </connector>
             <label>Next Month</label>
         </rules>
@@ -159,6 +191,83 @@
                 <targetReference>Next_Year_Interest_Paid</targetReference>
             </connector>
             <label>Next Year</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Monthly_or_Yearly_Desicion</name>
+        <label>Monthly or Yearly?</label>
+        <locationX>578</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>On_Time_or_Late_Yearly</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yearly</defaultConnectorLabel>
+        <rules>
+            <name>Monthly</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>MonthlyOrYearly.value</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>On_Time_or_Late</targetReference>
+            </connector>
+            <label>Monthly</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>On_Time_or_Late</name>
+        <label>On Time or Late</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Paid_on_Time_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>On Time</defaultConnectorLabel>
+        <rules>
+            <name>Paid_Late_Monthly</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Payment_Date</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>IntDueDateMonthFromInt</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Paid_Late_Assignment</targetReference>
+            </connector>
+            <label>Paid Late Monthly</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>On_Time_or_Late_Yearly</name>
+        <label>On Time or Late Yearly</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Paid_on_Time_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Paid on time</defaultConnectorLabel>
+        <rules>
+            <name>Late_Paid_Yearly</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Payment_Date</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>IntDueDateYearFromInt</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Paid_Late_Assignment</targetReference>
+            </connector>
+            <label>Late Paid Yearly</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -228,10 +337,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Next_Month_Interest_Paid</name>
-        <label>Next Month Interest Paid</label>
+        <name>Next_Month_Interest_Paid_Late</name>
+        <label>Next Month Interest Paid Late</label>
         <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -268,7 +377,7 @@
         <inputAssignments>
             <field>State__c</field>
             <value>
-                <stringValue>Paid On Time</stringValue>
+                <elementReference>PaidState</elementReference>
             </value>
         </inputAssignments>
         <object>Loan__c</object>
@@ -278,7 +387,7 @@
         <name>Next_Year_Interest_Paid</name>
         <label>Next Year Interest Paid</label>
         <locationX>842</locationX>
-        <locationY>782</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -315,7 +424,7 @@
         <inputAssignments>
             <field>State__c</field>
             <value>
-                <stringValue>Paid On Time</stringValue>
+                <elementReference>PaidState</elementReference>
             </value>
         </inputAssignments>
         <object>Loan__c</object>
@@ -325,7 +434,7 @@
         <name>X1st_Month_Interest_Paid</name>
         <label>1st Month Interest Paid</label>
         <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -362,7 +471,7 @@
         <inputAssignments>
             <field>State__c</field>
             <value>
-                <stringValue>Paid Late</stringValue>
+                <elementReference>PaidState</elementReference>
             </value>
         </inputAssignments>
         <object>Loan__c</object>
@@ -372,7 +481,7 @@
         <name>X1st_Year_Interest_Paid</name>
         <label>1st Year Interest Paid</label>
         <locationX>578</locationX>
-        <locationY>782</locationY>
+        <locationY>1274</locationY>
         <connector>
             <targetReference>Update_Account</targetReference>
         </connector>
@@ -409,7 +518,7 @@
         <inputAssignments>
             <field>State__c</field>
             <value>
-                <stringValue>Paid Late</stringValue>
+                <elementReference>PaidState</elementReference>
             </value>
         </inputAssignments>
         <object>Loan__c</object>
@@ -470,7 +579,7 @@
         <name>Update_Account</name>
         <label>Update Account</label>
         <locationX>578</locationX>
-        <locationY>974</locationY>
+        <locationY>1466</locationY>
         <inputReference>Account_Details</inputReference>
     </recordUpdates>
     <screens>
@@ -478,7 +587,7 @@
         <name>Error</name>
         <label>Error</label>
         <locationX>1106</locationX>
-        <locationY>782</locationY>
+        <locationY>1274</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -519,7 +628,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Monthly_or_Yearly_1st_or_not</targetReference>
+            <targetReference>Monthly_or_Yearly_Desicion</targetReference>
         </connector>
         <fields>
             <name>Monthly_or_Yearly_Section1</name>
@@ -834,6 +943,13 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>PaidState</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>PaymentDate</name>
