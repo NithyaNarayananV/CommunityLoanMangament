@@ -7,16 +7,47 @@
     <picklistValues>
         <picklist>Action__c</picklist>
         <values>
-            <fullName>Donation</fullName>
+            <fullName>Expense</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Expense</fullName>
+            <fullName>Income</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Other</fullName>
             <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Donation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EXP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GBE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TE</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

@@ -24,6 +24,37 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Donation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EXP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GBE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Paid_To__c</picklist>
         <values>
             <fullName>NN</fullName>
