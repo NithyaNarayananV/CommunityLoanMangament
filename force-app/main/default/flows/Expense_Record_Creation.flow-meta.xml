@@ -2,12 +2,165 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Category</name>
+        <label>Assign Category</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Category</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ExpenseType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Expense_Repay</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Income_Assignment</name>
+        <label>Income Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Category</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IncomeType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Expense_Repay</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>Donation</name>
+        <choiceText>Donation</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Donation</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Donation_Receipte</name>
+        <choiceText>{!Donation}Receipte</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>{!Donation}Receipte</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EXP</name>
+        <choiceText>EXP</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EXP</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GBE</name>
+        <choiceText>GBE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue> GBE </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>OE</name>
+        <choiceText>OE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Other</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Paid</name>
+        <choiceText>Paid</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Paid</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Paid_Late</name>
+        <choiceText>Paid Late</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Paid Late</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Paid_On_Time</name>
+        <choiceText>Paid On Time</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Paid On Time</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Receipt</name>
+        <choiceText>Receipt</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Receipt</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TE</name>
+        <choiceText>TE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue> TE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Upcoming</name>
+        <choiceText>Upcoming</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Upcoming</stringValue>
+        </value>
+    </choices>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <decisions>
+        <name>Income_or_Expense</name>
+        <label>Income or Expense</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Category</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Income</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IncomeOrExpense</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Income</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Income_Assignment</targetReference>
+            </connector>
+            <label>Income</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
         <name>Contact4Expense</name>
         <dataType>String</dataType>
@@ -30,7 +183,7 @@
         <expression>Today()</expression>
     </formulas>
     <interviewLabel>Expense Record Creation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>N Expense Record Creation</label>
+    <label>Transaction Record Creation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -59,6 +212,12 @@
             <field>Action__c</field>
             <value>
                 <elementReference>IncomeOrExpense</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <elementReference>Category</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -91,6 +250,12 @@
                 <elementReference>amount_number</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>State__c</field>
+            <value>
+                <elementReference>PaymentStatus1</elementReference>
+            </value>
+        </inputAssignments>
         <object>Loan__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -101,7 +266,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Expense_Repay</targetReference>
+            <targetReference>Income_or_Expense</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -126,7 +291,7 @@
     </recordLookups>
     <screens>
         <name>Expenses</name>
-        <label>Expenses</label>
+        <label>Transaction</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <allowBack>false</allowBack>
@@ -161,6 +326,51 @@
                     <isRequired>true</isRequired>
                     <scale>2</scale>
                 </fields>
+                <fields>
+                    <name>IncomeType</name>
+                    <choiceReferences>Donation</choiceReferences>
+                    <choiceReferences>Receipt</choiceReferences>
+                    <choiceReferences>Other</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>Donation</defaultSelectedChoiceReference>
+                    <fieldText>Type</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>IncomeOrExpense</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Income</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>ExpenseType</name>
+                    <choiceReferences>OE</choiceReferences>
+                    <choiceReferences>GBE</choiceReferences>
+                    <choiceReferences>TE</choiceReferences>
+                    <choiceReferences>EXP</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>EXP</defaultSelectedChoiceReference>
+                    <fieldText>Type</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>IncomeOrExpense</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Expense</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -183,17 +393,16 @@
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
-                    <name>Payment_Status</name>
-                    <choiceReferences>PaymentState</choiceReferences>
-                    <defaultValue>
-                        <stringValue>Paid On Time</stringValue>
-                    </defaultValue>
-                    <extensionName>flowruntime:choiceLookup</extensionName>
+                    <name>PaymentStatus1</name>
+                    <choiceReferences>Paid_On_Time</choiceReferences>
+                    <choiceReferences>Paid_Late</choiceReferences>
+                    <choiceReferences>Upcoming</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>Paid_On_Time</defaultSelectedChoiceReference>
                     <fieldText>Payment Status</fieldText>
-                    <fieldType>ComponentChoice</fieldType>
+                    <fieldType>RadioButtons</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -219,7 +428,7 @@
             <fieldText>&lt;p&gt;{!IncomeOrExpense}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Save Expense</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Save Record</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -231,6 +440,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Category</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>IncomeOrExpense</name>
         <dataType>Picklist</dataType>

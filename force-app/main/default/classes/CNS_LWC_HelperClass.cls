@@ -40,4 +40,3 @@ public class CNS_LWC_HelperClass {
         return totalInterestRec!= null? totalInterestRec : 0;
     }
 }
-

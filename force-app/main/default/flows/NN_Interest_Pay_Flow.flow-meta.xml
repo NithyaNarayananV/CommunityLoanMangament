@@ -100,7 +100,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            
             <conditions>
                 <leftValueReference>IntDueDateMonthFromLoan</leftValueReference>
                 <operator>IsNull</operator>
