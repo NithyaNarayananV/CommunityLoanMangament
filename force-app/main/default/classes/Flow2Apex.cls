@@ -30,6 +30,8 @@ public class Flow2Apex {
             //update acc;
 			System.debug(' Received the Account. account Details are below:');
 			System.debug(acc);
+			Id jobId = System.enqueueJob(new ArchiveLoanAccountQueuable(acc));
+			System.debug('Job queued with Id: ' + jobId);
         }
     }
 }
