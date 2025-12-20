@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>InitialDedection</name>
         <dataType>Number</dataType>
@@ -9,7 +7,6 @@
             <numberValue>0.2</numberValue>
         </value>
     </constants>
-    <environments>Default</environments>
     <formulas>
         <name>InitialDedectionFormula</name>
         <dataType>Currency</dataType>
@@ -87,7 +84,6 @@
         <connector>
             <targetReference>Create_Initial_Interest_Detection_on_Regular_Loan</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Type</field>
             <operator>EqualTo</operator>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>63.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Account_Status_to_Due</name>
         <label>Assign Account Status to Due</label>
@@ -153,12 +151,6 @@
             <targetReference>Update_Account</targetReference>
         </connector>
     </assignments>
-    <customProperties>
-        <name>ScreenProgressIndicator</name>
-        <value>
-            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
-        </value>
-    </customProperties>
     <decisions>
         <description>* If no other Due / Over Due Record is present, Status should be In Progress
 * If No other Upcoming records also present, Status should be Cloused</description>
@@ -167,7 +159,6 @@
         <locationX>842</locationX>
         <locationY>1190</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default - Close</defaultConnectorLabel>
@@ -238,7 +229,6 @@
         <locationX>1106</locationX>
         <locationY>1298</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
@@ -298,7 +288,6 @@
             <label>Paid Late</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>PreInstallmentDate</name>
         <dataType>Date</dataType>
@@ -339,7 +328,6 @@
         <connector>
             <targetReference>Installment_Details</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -360,7 +348,6 @@
         <connector>
             <targetReference>Default_Setup_for_Paid_To</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>Loan_Account__c</field>
             <operator>EqualTo</operator>
@@ -401,7 +388,6 @@
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
-        <filterLogic>( 1 OR 2 OR 3 ) AND 4 AND 5</filterLogic>
         <filters>
             <field>State__c</field>
             <operator>EqualTo</operator>
@@ -476,7 +462,6 @@
             </defaultValue>
             <fieldText>Error Message</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isReadOnly>
                 <booleanValue>true</booleanValue>
             </isReadOnly>
@@ -499,138 +484,13 @@
         <fields>
             <name>Installment_Screen_Section1</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Installment_Screen_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Installment_Amount_Paying</name>
-                    <dataType>Number</dataType>
-                    <defaultValue>
-                        <elementReference>Installment_Details.Repay_Amount__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Installment Amount</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Installment_Screen_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Installement_Due_Date</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>Installment_Details.Repay_Date__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Installment Due Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Installment_Screen_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>PaymentDateT</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>TodayDateFormula</elementReference>
-                    </defaultValue>
-                    <fieldText>Payment Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>false</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>false</booleanValue>
-                    </isReadOnly>
-                    <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;em style=&quot;font-size: 11px;&quot;&gt;Please select Date Between - &lt;/em&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt;&lt;em&gt;{!PreInstallmentDate}&lt;/em&gt;&lt;/strong&gt;&lt;em style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt; &amp;amp; &lt;/em&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 11px;&quot;&gt;&lt;em&gt;{!TodayDateFormula}&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!PaymentDateT} &gt;({!Installement_Due_Date}-25) &amp;&amp; {!PaymentDateT} &lt;= {!TodayDateFormula}</formulaExpression>
-                    </validationRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Installment_Screen_Section2</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Installment_Screen_Section2_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Info</name>
-                    <fieldText>&lt;p&gt;&lt;strong&gt;You are going to pay the Installment Amount  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;&lt;em&gt;&lt;u&gt;₹&lt;/u&gt;&lt;/em&gt;&lt;/strong&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;&lt;em&gt;&lt;u&gt;{!Installment_Amount_Paying}&lt;/u&gt;&lt;/em&gt;&lt;/strong&gt;&lt;strong&gt; which is due on  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;&lt;em&gt;&lt;u&gt;{!Installement_Due_Date}&lt;/u&gt;&lt;/em&gt;&lt;/strong&gt;&lt;strong&gt;. Click the &lt;/strong&gt;&lt;strong style=&quot;color: rgb(57, 3, 255);&quot;&gt;&quot;Pay Installment&quot;&lt;/strong&gt;&lt;strong&gt; to Submit the Payment.&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>9</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Installment_Screen_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <fieldType>ObjectProvided</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <objectFieldReference>Installment_Details.Paid_To__c</objectFieldReference>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
-        <nextOrFinishButtonLabel>Pay Installment</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>64.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Category</name>
         <label>Assign Category</label>
@@ -130,12 +128,6 @@
             <stringValue>Upcoming</stringValue>
         </value>
     </choices>
-    <customProperties>
-        <name>ScreenProgressIndicator</name>
-        <value>
-            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
-        </value>
-    </customProperties>
     <decisions>
         <name>Income_or_Expense</name>
         <label>Income or Expense</label>
@@ -176,7 +168,6 @@
         <picklistField>State__c</picklistField>
         <picklistObject>Loan__c</picklistObject>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>today</name>
         <dataType>Date</dataType>
@@ -268,7 +259,6 @@
         <connector>
             <targetReference>Income_or_Expense</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>SobjectType</field>
             <operator>EqualTo</operator>
@@ -303,124 +293,13 @@
         <fields>
             <name>Expenses_Section1</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Expenses_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Date</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>today</elementReference>
-                    </defaultValue>
-                    <fieldText>Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>amount_number</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Amount</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <scale>2</scale>
-                </fields>
-                <fields>
-                    <name>IncomeType</name>
-                    <choiceReferences>Donation</choiceReferences>
-                    <choiceReferences>Receipt</choiceReferences>
-                    <choiceReferences>Other</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultSelectedChoiceReference>Donation</defaultSelectedChoiceReference>
-                    <fieldText>Type</fieldText>
-                    <fieldType>RadioButtons</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>IncomeOrExpense</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Income</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
-                    <name>ExpenseType</name>
-                    <choiceReferences>OE</choiceReferences>
-                    <choiceReferences>GBE</choiceReferences>
-                    <choiceReferences>TE</choiceReferences>
-                    <choiceReferences>EXP</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultSelectedChoiceReference>EXP</defaultSelectedChoiceReference>
-                    <fieldText>Type</fieldText>
-                    <fieldType>RadioButtons</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>IncomeOrExpense</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Expense</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Expenses_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Spent_By</name>
-                    <choiceReferences>Contact4Expense</choiceReferences>
-                    <extensionName>flowruntime:choiceLookup</extensionName>
-                    <fieldText>Spent By</fieldText>
-                    <fieldType>ComponentChoice</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
-                    <name>PaymentStatus1</name>
-                    <choiceReferences>Paid_On_Time</choiceReferences>
-                    <choiceReferences>Paid_Late</choiceReferences>
-                    <choiceReferences>Upcoming</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultSelectedChoiceReference>Paid_On_Time</defaultSelectedChoiceReference>
-                    <fieldText>Payment Status</fieldText>
-                    <fieldType>RadioButtons</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Description</name>
             <dataType>String</dataType>
             <fieldText>Description</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
         </fields>
         <fields>
@@ -428,7 +307,6 @@
             <fieldText>&lt;p&gt;{!IncomeOrExpense}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Save Record</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>

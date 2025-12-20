@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This action is supposed to delete the loan&apos;s related record and create its respective bigObject records</description>
+        <name>Archive_Loan_Records</name>
+        <label>Archive Loan Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Flow2Apex</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>loanIds</name>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <interviewLabel>ArchiveLoan {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ArchiveLoan</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>Archive_Loan</name>
+        <label>Archive Loan</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Archive_Loan_Records</targetReference>
+        </connector>
+        <fields>
+            <name>Archive_Note</name>
+            <fieldText>&lt;p&gt;Archiving this Loan will remove the repay or interest records created.&lt;/p&gt;&lt;p&gt;However, the data will be in bigObject and visible here.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: the repay records will &lt;strong style=&quot;color: rgb(250, 0, 0);&quot;&gt;&lt;u&gt;not be editable!!&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Archive_Loan</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>loanRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+</Flow>

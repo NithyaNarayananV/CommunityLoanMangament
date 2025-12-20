@@ -21,7 +21,7 @@ export default class CNS_LWC_MasterDataDisplay extends LightningElement {
 
     handleRefresh() {
         this.fetchAllMetrics(); // Trigger refresh from the top icon
-        //DefaultRecord.accountRefresh();
+        DefaultRecord.accountRefresh();
     }
 
     fetchAllMetrics() {

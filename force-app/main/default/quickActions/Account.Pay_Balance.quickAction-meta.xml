@@ -39,5 +39,6 @@
     </quickActionLayout>
     <targetObject>Loan__c</targetObject>
     <targetParentField>Loan_Account__c</targetParentField>
+    <targetRecordType>Loan__c.Loan_Repay</targetRecordType>
     <type>Create</type>
 </QuickAction>

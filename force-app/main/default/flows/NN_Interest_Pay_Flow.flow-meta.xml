@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>63.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_Paid_To_Picklist_Default</name>
         <label>Assign Paid To Picklist Default</label>
@@ -50,12 +48,6 @@
             <targetReference>Monthly_or_Yearly_1st_or_not</targetReference>
         </connector>
     </assignments>
-    <customProperties>
-        <name>ScreenProgressIndicator</name>
-        <value>
-            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
-        </value>
-    </customProperties>
     <decisions>
         <name>Loan_Type</name>
         <label>Loan Type</label>
@@ -224,7 +216,6 @@
         <locationX>314</locationX>
         <locationY>782</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Paid_on_Time_Assignment</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>On Time</defaultConnectorLabel>
@@ -264,13 +255,11 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Paid_Late_Assignment</targetReference>
             </connector>
             <label>Late Paid Yearly</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>IntDueDateMonthFromInt</name>
         <dataType>Date</dataType>
@@ -533,7 +522,6 @@
         <connector>
             <targetReference>Interest_Details</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -554,7 +542,6 @@
         <connector>
             <targetReference>Assign_Paid_To_Picklist_Default</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Loan_Account__c</field>
             <operator>EqualTo</operator>
@@ -615,7 +602,6 @@
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 20px;&quot;&gt;&lt;u&gt;Dood, as per the rule, you can only create an interest record to Annual Loan&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Exit</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -633,298 +619,18 @@
         <fields>
             <name>Monthly_or_Yearly_Section1</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Monthly_or_Yearly_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Loan_Amount</name>
-                    <dataType>Number</dataType>
-                    <defaultValue>
-                        <elementReference>Account_Details.Loan_Amount__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Loan Amount</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Monthly_or_Yearly_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Balance_Loan</name>
-                    <dataType>Number</dataType>
-                    <defaultValue>
-                        <elementReference>Account_Details.Balance__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Balance Loan</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Monthly_or_Yearly_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Loan_Start_Date</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>Account_Details.Loan_Date__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Loan Start Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Interest_Details.Id</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
-                    <name>Last_Interest_Paid_Date</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>Interest_Details.Repay_Date__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Last Interest Paid Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>true</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Interest_Details.Id</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>4</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Monthly_or_Yearly_Section2</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Monthly_or_Yearly_Section2_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>DisFrmLoan</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;Monthly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(0, 110, 255); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount}&lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;  for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(102, 145, 255); font-size: 14px;&quot;&gt;{!IntDueDateMonthFromLoan}.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2); background-color: rgb(255, 255, 255);&quot;&gt;Yearly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(34, 60, 255); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt; ₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2); background-color: rgb(255, 255, 255);&quot;&gt;for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(117, 147, 255); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;{!IntDueDateYearFromLoan}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Interest_Details.Id</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
-                    <name>DisFromInt</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;Monthly Interest of&lt;/strong&gt;&lt;strong style=&quot;color: rgb(0, 110, 255); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount}&lt;/strong&gt;&lt;strong style=&quot;color: rgb(2, 2, 2);&quot;&gt;  for Due date  &lt;/strong&gt;&lt;strong style=&quot;color: rgb(102, 145, 255); font-size: 14px;&quot;&gt;{!IntDueDateMonthFromInt}.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(2, 2, 2);&quot;&gt;Yearly Interest of&lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(34, 60, 255); font-size: 16px;&quot;&gt; ₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(2, 2, 2);&quot;&gt;for Due date  &lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(117, 147, 255); font-size: 14px;&quot;&gt;{!IntDueDateYearFromInt}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Interest_Details.Id</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>9</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Monthly_or_Yearly_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>MonthlyOrYearly</name>
-                    <extensionName>flowruntime:toggle</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>messageToggleActive</name>
-                        <value>
-                            <stringValue>Yearly : {!YearlyInterestAmount}</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>messageToggleInactive</name>
-                        <value>
-                            <stringValue>Monthly : {!MonthlyInterestAmount}</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Monthly or Yearly?</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>value</name>
-                        <value>
-                            <booleanValue>false</booleanValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
-                    <name>Payment_Date</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>TodayDateFormula</elementReference>
-                    </defaultValue>
-                    <fieldText>Payment Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>Monthly_or_Yearly_Section3</name>
             <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Monthly_or_Yearly_Section3_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>DisMonthPay</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;Monthly Interest of&lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 71, 71); font-size: 16px;&quot;&gt; ₹{!MonthlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 71, 71); font-size: 14px;&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>MonthlyOrYearly.value</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
-                    <name>DisYearPay</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;Yearly Interest of &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(255, 71, 71);&quot;&gt;₹{!YearlyInterestAmount} &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(255, 71, 71);&quot;&gt;is being paid on {!Payment_Date}.&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>MonthlyOrYearly.value</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>9</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Monthly_or_Yearly_Section3_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <fieldType>ObjectProvided</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <objectFieldReference>Interest_Details.Paid_To__c</objectFieldReference>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
-        <nextOrFinishButtonLabel>Pay</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
