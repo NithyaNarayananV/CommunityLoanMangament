@@ -16,6 +16,20 @@ public class Flow2Apex {
 	public static void LightningStudio(){
 		System.debug('Lightning Studio');
 	}
+	@AuraEnabled(cacheable=true)
+	public static List<Load_Account__b> getLoanData() {
+		// Query Big Object (only indexed fields allowed in WHERE clause)
+		List<Load_Account__b> loans = [
+			SELECT Id, CreatedDate, Name__c, Contact__c, 
+			Contact_Name__c, Loan_Type__c, Loan_Amount__c, 
+			Account_Number__c, Details__c 
+			FROM Load_Account__b
+			LIMIT 50
+		];
+		return loans;
+	}
+	
+
 
 	@InvocableMethod(label='ArchiveLoan')
 	public static void ArchiveLoan(List<Id> loanIds){

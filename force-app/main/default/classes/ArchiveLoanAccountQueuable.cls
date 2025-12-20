@@ -21,17 +21,12 @@ public class ArchiveLoanAccountQueuable implements Queueable  {
 
     // This runs asynchronously
     public void execute(QueueableContext context) {
-        //Account loanAccount = [SELECT Id, Status__c FROM Account WHERE Id = :loanId];
-        //loan.Status__c = 'Archived';
-        //update loan;
-		// DELECT Id, Name, Type, ParentId, Phone, AccountNumber, 
-		//Description, OwnerId, CreatedDate, Repaid__c, SLA__c, 
-		//Active__c, Balance__c, Interest_Paid_A__c, SLASerialNumber__c, 
-		//SLAExpirationDate__c, Loan_Date__c, Contact__c, Security_Contact__c,
-		// Account_Id__c, Loan_Amount__c, Advance_Deduction__c, State__c, Type__c 
+        List<Loan__c> repayLoanRecords = [SELECT Id, Name, PyamentDate__c, Action__c, Repay_Amount__c, Paid_To__c, Repay_Date__c, LoanerID__c, State__c, Description__c, Category__c, Loan_Account__c 
+		FROM Loan__c  
+		WHERE Loan_Account__c = :loanAccount.Id];
+		String jsonOutput = JSON.serialize(repayLoanRecords);
+		System.debug(jsonOutput);
 
-		//select Id, CreatedById, CreatedDate, SystemModstamp, Name__c, Contact__c, 
-		//Contact_Name__c, Loan_Type__c, Loan_Amount__c, Account_Number__c, Details__c from Load_Account__b 
 		Load_Account__b newLoanAccount = new Load_Account__b();
 		newLoanAccount.Name__c = loanAccount.Name;
 		newLoanAccount.Contact__c = loanAccount.Contact__c;
@@ -39,8 +34,12 @@ public class ArchiveLoanAccountQueuable implements Queueable  {
 		newLoanAccount.Loan_Amount__c = loanAccount.Loan_Amount__c;
 		newLoanAccount.Balance_Loan_Amount__c = loanAccount.Balance__c;
 		newLoanAccount.State__c = loanAccount.State__c;
-		newLoanAccount.Account_Number__c = 1234;
-		newLoanAccount.Details__c = 'TEST';
+		Datetime nowDt = Datetime.now();
+		String formatted = nowDt.format('yyyyMMddHHmmss');
+		Long numericDateTime = Long.valueOf(formatted);
+		System.debug(numericDateTime); 
+		newLoanAccount.Account_Number__c = numericDateTime;
+		newLoanAccount.Details__c = jsonOutput;
 		System.debug(newLoanAccount);
 		Database.insertImmediate(newLoanAccount);
 		
