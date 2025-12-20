@@ -7,9 +7,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>AccountHierarchy</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Account.Pay_Balance</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
@@ -63,11 +60,11 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Global.NewAccount</value>
+                            <value>Delete</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!Record.State__c}</leftValue>
-                                    <operator>EQUAL</operator>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
                                     <rightValue>Other</rightValue>
                                 </criteria>
                             </visibilityRule>
@@ -92,7 +89,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>4</value>
+                    <value>6</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -259,6 +256,80 @@
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Regular_Loan</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Loans__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CREATED_DATE</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Repay_Amount__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Description__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Paid_To__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PyamentDate__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Repay_Date__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Repay Loans</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>CREATED_DATE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Ascending</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Other</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -618,6 +689,22 @@
                 </valueListItems>
                 <valueListItems>
                     <value>Account.Interest_Payment</value>
+                    <visibilityRule>
+                        <booleanFilter>1 AND 2</booleanFilter>
+                        <criteria>
+                            <leftValue>{!Record.Type}</leftValue>
+                            <operator>EQUAL</operator>
+                            <rightValue>Annual_Loan</rightValue>
+                        </criteria>
+                        <criteria>
+                            <leftValue>{!Record.Balance__c}</leftValue>
+                            <operator>GT</operator>
+                            <rightValue>0</rightValue>
+                        </criteria>
+                    </visibilityRule>
+                </valueListItems>
+                <valueListItems>
+                    <value>Delete</value>
                 </valueListItems>
             </valueList>
         </properties>

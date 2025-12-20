@@ -82,6 +82,12 @@
                 <identifier>RecordDescription__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Category__c</fieldItem>
+                <identifier>RecordCategory__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-67b3e175-41dc-4289-9026-ec5e8f65a885</name>
         <type>Facet</type>
     </flexiPageRegions>
