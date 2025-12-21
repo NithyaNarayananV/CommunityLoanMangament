@@ -22,8 +22,9 @@ public class ArchiveLoanAccountQueuable implements Queueable  {
     // This runs asynchronously
     public void execute(QueueableContext context) {
         List<Loan__c> repayLoanRecords = [SELECT Id, Name, PyamentDate__c, Action__c, Repay_Amount__c, Paid_To__c, Repay_Date__c, LoanerID__c, State__c, Description__c, Category__c, Loan_Account__c 
-		FROM Loan__c  
-		WHERE Loan_Account__c = :loanAccount.Id];
+			FROM Loan__c  
+			WHERE Loan_Account__c = :loanAccount.Id
+			ORDER BY Repay_Date__c];
 		String jsonOutput = JSON.serialize(repayLoanRecords);
 		System.debug(jsonOutput);
 
@@ -33,6 +34,7 @@ public class ArchiveLoanAccountQueuable implements Queueable  {
 		newLoanAccount.Security_Contact__c = loanAccount.Security_Contact__c;
 		newLoanAccount.Loan_Amount__c = loanAccount.Loan_Amount__c;
 		newLoanAccount.Balance_Loan_Amount__c = loanAccount.Balance__c;
+		newLoanAccount.Loan_Type__c = loanAccount.Type;
 		newLoanAccount.State__c = loanAccount.State__c;
 		Datetime nowDt = Datetime.now();
 		String formatted = nowDt.format('yyyyMMddHHmmss');

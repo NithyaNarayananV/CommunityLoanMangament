@@ -1,139 +1,126 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import getLoanData from '@salesforce/apex/Flow2Apex.getLoanData';
 
 export default class ArchivedLoanRecordsViewer extends LightningElement {
-    loans;
-    loanDetails=[];
-    masterLoan=[];
-    loanColumns = [
-    { label: 'Type', fieldName: 'Type', type: 'text' },
-    { label: 'Description', fieldName: 'Description', type: 'text' },
-    { label: 'Repaid', fieldName: 'Repaid__c', type: 'boolean' },
-    { label: 'SLA', fieldName: 'SLA__c', type: 'text' },
-    { label: 'Active', fieldName: 'Active__c', type: 'boolean' },
-    { label: 'Balance', fieldName: 'Balance__c', type: 'currency' },
-    { label: 'Interest Paid A', fieldName: 'Interest_Paid_A__c', type: 'currency' },
-    { label: 'Loan Date', fieldName: 'Loan_Date__c', type: 'date' },
-    { label: 'Contact', fieldName: 'Contact__c', type: 'text' },
-    { label: 'Security Contact', fieldName: 'Security_Contact__c', type: 'text' },
-    { label: 'Account Id', fieldName: 'Account_Id__c', type: 'text' },
-    { label: 'Loan Amount', fieldName: 'Loan_Amount__c', type: 'currency' },
-    { label: 'Advance Deduction', fieldName: 'Advance_Deduction__c', type: 'currency' },
-    { label: 'State', fieldName: 'State__c', type: 'text' },
-    { label: 'Type', fieldName: 'Type__c', type: 'text' },
+    @track loans = [];
+    @track loanDetails = [];
+    @track masterLoan = {};          // map: accountNumber -> array of detail objects
+    @track expandedRowId = null;     // currently expanded parent key
+    @track expandedRowData = [];     // array of child records for the expanded row
 
-        {
-            type: 'action',
-            typeAttributes: { rowActions: [
-                { label: 'View details', name: 'view_details' }
-            ] }
-        }
-    ];
-    repayColumns = [
-    { label: 'Id', fieldName: 'Id', type: 'text' },
-    { label: 'Name', fieldName: 'Name', type: 'text' },
-    { label: 'Payment Date', fieldName: 'PyamentDate__c', type: 'date' },
-    { label: 'Action', fieldName: 'Action__c', type: 'text' },
-    { label: 'Repay Amount', fieldName: 'Repay_Amount__c', type: 'currency' },
-    { label: 'Paid To', fieldName: 'Paid_To__c', type: 'text' },
-    { label: 'Repay Date', fieldName: 'Repay_Date__c', type: 'date' },
-    { label: 'Loaner ID', fieldName: 'LoanerID__c', type: 'text' },
-    { label: 'State', fieldName: 'State__c', type: 'text' },
-    { label: 'Description', fieldName: 'Description__c', type: 'text' },
-    { label: 'Category', fieldName: 'Category__c', type: 'text' },
-    { label: 'Loan Account', fieldName: 'Loan_Account__c', type: 'text' }
-];
-loanColumns = [
+    loanColumns = [
+        { label: 'Created Date', fieldName: 'CreatedDate', type: 'date',
+          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
         { label: 'Name', fieldName: 'Name__c', type: 'text' },
-        { label: 'Loan Amount', fieldName: 'Loan_Amount__c', type: 'currency' },
-        { label: 'State', fieldName: 'State__c', type: 'text' },
+        //{ label: 'Contact', fieldName: 'Contact__c', type: 'text' },
+        { label: 'Contact Name', fieldName: 'Contact_Name__c', type: 'text' },
+        { label: 'Loan Type', fieldName: 'Loan_Type__c', type: 'text' },
+        { label: 'Loan Amount', fieldName: 'Loan_Amount__c', type: 'currency',
+          typeAttributes: { currencyCode: 'INR' } },
+        { label: 'Account Number', fieldName: 'Account_Number__c', type: 'text' },
+        { label: 'Details', fieldName: 'Details__c', type: 'text' },
         {
             type: 'action',
-            typeAttributes: { rowActions: [{ label: 'View Details', name: 'view_details' }] }
+            typeAttributes: { rowActions: [{ label: 'View Details', name: 'view_details' },
+            { label: 'Delete', name: 'delete' }] }
+        },
+        {
+            type: 'action',
         }
     ];
 
     detailColumns = [
-        { label: 'Id', fieldName: 'Id', type: 'text' },
+        //{ label: 'Id', fieldName: 'Id', type: 'text' },
         { label: 'Name', fieldName: 'Name', type: 'text' },
-        { label: 'Payment Date', fieldName: 'PyamentDate__c', type: 'date' },
         { label: 'Action', fieldName: 'Action__c', type: 'text' },
-        { label: 'Repay Amount', fieldName: 'Repay_Amount__c', type: 'currency' },
+        { label: 'Repay Amount', fieldName: 'Repay_Amount__c', type: 'currency',
+          typeAttributes: { currencyCode: 'INR' } },
         { label: 'Paid To', fieldName: 'Paid_To__c', type: 'text' },
-        { label: 'Repay Date', fieldName: 'Repay_Date__c', type: 'date' },
-        { label: 'Loaner ID', fieldName: 'LoanerID__c', type: 'text' },
-        { label: 'State', fieldName: 'State__c', type: 'text' },
-        { label: 'Description', fieldName: 'Description__c', type: 'text' },
-        { label: 'Category', fieldName: 'Category__c', type: 'text' },
-        { label: 'Loan Account', fieldName: 'Loan_Account__c', type: 'text' }
+        { label: 'Due Date', fieldName: 'Repay_Date__c', type: 'date',
+          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
+        //{ label: 'Loaner ID', fieldName: 'LoanerID__c', type: 'text' },
+        { label: 'Paid Date', fieldName: 'PyamentDate__c', type: 'date',
+          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
+        { label: 'State', fieldName: 'State__c', type: 'text' }//,
+        //{ label: 'Description', fieldName: 'Description__c', type: 'text' },
+        //{ label: 'Category', fieldName: 'Category__c', type: 'text' },
+        //{ label: 'Loan Account', fieldName: 'Loan_Account__c', type: 'text' }
     ];
-
-    connectedCallback() {
-        // Flatten masterLoan into loanData for datatable
-        // Example: masterLoan = [{ loan, details }]
-        // Replace with your actual data assignment
-        this.loanData = this.masterLoan.map(entry => entry.loan);
-    }
-
-    handleRowAction(event) {
-        const { action, row } = event.detail;
-        if (action.name === 'view_details') {
-            // Find the entry in masterLoan and set selectedDetails
-            const entry = this.masterLoan.find(e => e.loan.Id === row.Id);
-            this.selectedDetails = entry ? entry.details : [];
-        }
-    }
-    //    Type, Description, Repaid__c, SLA__c, Active__c, Balance__c, Interest_Paid_A__c, Loan_Date__c, Contact__c, Security_Contact__c, Account_Id__c, Loan_Amount__c, Advance_Deduction__c, State__c, Type__c 
-
-
-
-
 
     @wire(getLoanData)
     wiredLoans({ error, data }) {
         if (data) {
+            // store raw loans
             this.loans = data;
-            console.log('Loan data:', this.loans);
-
-            this.loanExtractor(data);
+            console.log('Loan data sample', JSON.stringify(this.loans[0]));
+            this.loanExtractor(this.loans);
         } else if (error) {
             console.error('Error fetching loan data:', error);
         }
     }
 
-    loanExtractor(data) {
-        this.loans = data;
+    loanExtractor(loans) {
+        // reset maps
+        this.masterLoan = {};
+        this.loanDetails = [];
 
-        for (let i = 0; i < this.loans.length; i++) {
-            let loan = this.loans[i];
-            console.log('Loan I = ', loan);
-            console.log('Details = ',loan.Details__c);
+        for (let loan of loans) {
+            // guard: ensure Account_Number__c exists and is a string key
+            let accountKey = loan.Account_Number__c ;
 
             if (loan.Details__c) {
                 try {
-                    let detailsList = JSON.parse(loan.Details__c);
-                    console.log('[loan.details__c]:', detailsList);
-
-                    let detailslistMaster = [];
-
-                    for (let det of detailsList) {
-                        // If det is already an object, skip parsing again
-                        let detList = (typeof det === 'string') ? JSON.parse(det) : det;
-                        console.log('detList:', detList);
-                        detailslistMaster.push(detList);
+                    // Details__c may be a JSON string or already an array/object
+                    let detailsList = loan.Details__c;
+                    if (typeof detailsList === 'string') {
+                        detailsList = JSON.parse(detailsList);
                     }
-                    
-                    console.log(' --detailslistMaster-- :', detailslistMaster);
-                    this.loanDetails.push(...detailslistMaster)
-                    this.masterLoan.push({ loan, details: detailslistMaster });
-                                           //loan.Details__x = detailslistMaster    ;
-                    console.log('loan.Details__x:', this.loanDetails);
+
+                    // detailsList should be an array; normalize each element to object
+                    const detailslistMaster = [];
+                    if (Array.isArray(detailsList)) {
+                        for (let det of detailsList) {
+                            let detObj = det;
+                            if (typeof det === 'string') {
+                                detObj = JSON.parse(det);
+                            }
+                            detailslistMaster.push(detObj);
+                        }
+                    } else {
+                        // single object case
+                        detailslistMaster.push(detailsList);
+                    }
+                    this.masterLoan[accountKey] = detailslistMaster;
+                    console.log('masterLoan[accountKey] = detailslistMaster ', accountKey, 'list = ',detailslistMaster);
+
+                    // store full list keyed by accountKey
+                    // accumulate for debugging or other uses
+                    this.loanDetails.push(...detailslistMaster);
                 } catch (e) {
-                    console.error('Error parsing loan.Details__c for loan:', loan.Id, e);
+                    console.error('Error parsing Details__c for loan', loan.Id, e);
+                    //this.masterLoan[accountKey] = []; // safe fallback
                 }
             } else {
-                console.warn('Loan has no Details__c:', loan.Id);
+                //this.masterLoan[accountKey] = [];
             }
         }
+        console.log('masterLoan map keys', Object.keys(this.masterLoan));
     }
+
+    handleRowAction(event) {
+        let actionName =  event.detail.action.name;
+        let row = event.detail.row;
+        console.log('row : ',row);
+
+        let parentKey = row.Account_Number__c;
+        console.log('row.Account_Number__c',row.Account_Number__c);
+        if (actionName === 'view_details') {
+                this.expandedRowId = parentKey;
+                this.expandedRowData=[];
+                this.expandedRowData = this.masterLoan[parentKey];
+
+        }
+    }
+
+    
 }

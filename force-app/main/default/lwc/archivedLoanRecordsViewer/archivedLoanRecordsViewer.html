@@ -1,72 +1,24 @@
 <template>
-    <lightning-card > 
+    <lightning-card>
+        <lightning-datatable
+            key-field="Account_Number__c"
+            data={loans}
+            columns={loanColumns}
+            show-row-number-column
+            onrowaction={handleRowAction}
+            hide-checkbox-column>
+        </lightning-datatable>
 
-        <template if:true={loans}>
-            <!--template for:each={loans} for:item="loan" for:index="loanIndex">
-                <p key={loan.Id}>
-                    {loan.Name__c} | {loan.Repay_Amount__c} | {loan.State__c} | {loan.Details__c} !! TXXXTattributes *    
-                    {loanDetails}
-
-                    [][][]{masterLoan}
-
-                    %%%%%%%%%%%%%%%%%%5%%%%%%%%--------------------%%%%%%%%%%%%%%%%%%%%%555
-                </p>
-            </template-->
-        <template if:true={masterLoan}>
-            <template for:each={masterLoan} for:item="entry">
-                <div key={entry.loan.Id} class="loan-block">
-                    <p>
-                        {entry.loan.Name__c} | {entry.loan.Loan_Amount__c} | {entry.loan.State__c}
-                        Name, Type, Description, Repaid__c, SLA__c, Active__c, Balance__c, Interest_Paid_A__c, Loan_Date__c, Contact__c, Security_Contact__c, Account_Id__c, Loan_Amount__c, Advance_Deduction__c, State__c, Type__c 
-                    </p>
-    <lightning-datatable
-                    key-field="Id"
-                    data={loans}
-                    columns={loanColumns}
-                    show-row-number-column
-                    onrowaction={handleRowAction}
-                    onrowselection={handleRowSelection}
-                    hide-checkbox-column>
+        <template if:true={expandedRowId}>
+            <div class="slds-m-around_medium">
+                <lightning-datatable
+                    key-field="Account_Number__c"
+                    data={expandedRowData}
+                    columns={detailColumns}>
                 </lightning-datatable>
-                    <template if:true={entry.details}>
-                        <ul>
-                            <template for:each={entry.details} for:item="detail">
-                                <li key={detail.Id}>
-                                    
-                                    {detail.Id} | {detail.Name} | {detail.PyamentDate__c} | {detail.Action__c} | {detail.Repay_Amount__c} | {detail.Paid_To__c} | {detail.Repay_Date__c} | {detail.LoanerID__c} | {detail.State__c} | {detail.Description__c} | {detail.Category__c} | {detail.Loan_Account__c} 
-                                </li>
-                            </template>
-                        </ul>
-                    </template>
-                </div>
-        </template>
-</template>
-
-<template if:true={masterLoan}>
-            <lightning-datatable
-                key-field="Id"
-                data={loanData}
-                columns={loanColumns}
-                show-row-number-column
-                onrowaction={handleRowAction}
-                hide-checkbox-column>
-            </lightning-datatable>
-        </template>
-
-        <!-- Selected loan details -->
-        <template if:true={selectedDetails}>
-            <div class="slds-m-top_medium">
-                <lightning-card title="Loan Details">
-                    <lightning-datatable
-                        key-field="Id"
-                        data={selectedDetails}
-                        columns={detailColumns}
-                        show-row-number-column>
-                    </lightning-datatable>
-                </lightning-card>
             </div>
         </template>
-
-        </template>
     </lightning-card>
+
+    
 </template>
