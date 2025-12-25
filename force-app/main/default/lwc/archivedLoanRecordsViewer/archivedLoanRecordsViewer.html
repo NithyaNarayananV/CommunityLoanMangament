@@ -1,24 +1,131 @@
 <template>
-    <lightning-card>
-        <lightning-datatable
-            key-field="Account_Number__c"
-            data={loans}
-            columns={loanColumns}
-            show-row-number-column
-            onrowaction={handleRowAction}
-            hide-checkbox-column>
-        </lightning-datatable>
+    <lightning-card title="Tabbed View Example">
+        <lightning-tabset variant="scoped" active-tab-value="account">
+            
+            <!-- Account Tab -->
+            <lightning-tab label="Custom Table" value="Custom Table">
+            
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr>
+                            <th>Created Date</th>
+                            <th>Name</th>
+                            <th>Contact Name</th>
+                            <th>Status</th>
+                            <th>Security Name</th>
+                            <th>Loan Type</th>
+                            <th>Loan Amount</th>
+                            <th>Account Number</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through accounts -->
+                        <template for:each={loans} for:item="loan">
+                                    
+                            <tr key={loan.Id}>
+                                
+                                <td>{loan.CreatedDate}</td>
+                                <td>{loan.Name__c}</td>
+                                <td>{loan.Contact_Name__c}</td>
+                                <td>
+                                    <lightning-accordion allow-multiple-sections-open active-section-name="A">
+                                        <!-- Section A -->
+                                        <lightning-accordion-section name="B" label="Repayment History">
+                                                <div class="slds-m-around_medium">
+                                                    <lightning-datatable
+                                                        key-field="Account_Number__c"
+                                                        data={loan.Details__c}
+                                                        columns={detailColumns}>
+                                                    </lightning-datatable>
+                                                </div>
+                                        </lightning-accordion-section>
+                                    </lightning-accordion>
+                                </td>
+                                <td>{loan.Security_Contact_Name__c}</td>
+                                <td>{loan.Loan_Type__c}</td>
+                                <td>{loan.Loan_Amount__c}</td>
+                                <td>{loan.Account_Number__c}</td>
+                                <td> <!-- Clickable button --> 
+                                <lightning-button label="View Details" variant="brand" onclick={handleRowClick} data-id={loan.Account_Number__c}> 
+                                </lightning-button> 
+                                </td>
+                                <template if:true={expandedRowId}>
+                                <div class="slds-m-around_medium">
+                                    <lightning-datatable
+                                        key-field="Account_Number__c"
+                                        data={expandedRowData}
+                                        columns={detailColumns}>
+                                    </lightning-datatable>
+                                </div>
+                            </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-tab>
 
-        <template if:true={expandedRowId}>
-            <div class="slds-m-around_medium">
-                <lightning-datatable
-                    key-field="Account_Number__c"
-                    data={expandedRowData}
-                    columns={detailColumns}>
-                </lightning-datatable>
-            </div>
-        </template>
+            <!-- Contact Tab -->
+            <lightning-tab label="Contact" value="contact">
+                <p><b>Contact Name:</b> K. Radha</p>
+                <p><b>Email:</b> radha@example.com</p>
+                <p><b>Phone:</b> +91-9876543210</p>
+            </lightning-tab>
+
+            <!-- Loan Details Tab -->
+            <lightning-tab label="Lightning Table Layout" value="Lightning Table Layout">
+                <lightning-card>
+                    <div class="slds-p-around_medium">
+                        <div class="slds-box slds-border_around slds-border_brand slds-p-around_medium">
+                            <lightning-datatable
+                                key-field="Account_Number__c"
+                                data={loans}
+                                columns={loanColumns}
+                                show-row-number-column
+                                onrowaction={handleRowAction}
+                                hide-checkbox-column>
+                            </lightning-datatable>
+                            <template if:true={expandedRowId}>
+                                <div class="slds-m-around_medium">
+                                    <lightning-datatable
+                                        key-field="Account_Number__c"
+                                        data={expandedRowData}
+                                        columns={detailColumns}>
+                                    </lightning-datatable>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-card>
+            </lightning-tab>
+
+        </lightning-tabset>
     </lightning-card>
 
-    
+    <lightning-card title="Accordion Example">
+        <lightning-accordion 
+            allow-multiple-sections-open
+            active-section-name="A">
+            
+            <!-- Section A -->
+            <lightning-accordion-section name="A" label="Loan Details">
+                <p>Loan Amount: ₹50,000</p>
+                <p>Type: Annual Loan</p>
+            </lightning-accordion-section>
+
+            <!-- Section B -->
+            <lightning-accordion-section name="B" label="Repayment History">
+                <ul>
+                    <li>17-Nov-2024: ₹1,000 (Paid Late)</li>
+                    <li>16-Dec-2024: ₹1,000 (Paid On Time)</li>
+                </ul>
+            </lightning-accordion-section>
+
+            <!-- Section C -->
+            <lightning-accordion-section name="C" label="Contact Info">
+                <p>Borrower: R. Puviarasan</p>
+                <p>Account #: 1234</p>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </lightning-card>    
 </template>

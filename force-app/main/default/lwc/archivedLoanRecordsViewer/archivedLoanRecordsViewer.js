@@ -14,19 +14,20 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
         { label: 'Name', fieldName: 'Name__c', type: 'text' },
         //{ label: 'Contact', fieldName: 'Contact__c', type: 'text' },
         { label: 'Contact Name', fieldName: 'Contact_Name__c', type: 'text' },
+        { label: 'Security Name', fieldName: 'Security_Contact_Name__c', type: 'text' },
         { label: 'Loan Type', fieldName: 'Loan_Type__c', type: 'text' },
         { label: 'Loan Amount', fieldName: 'Loan_Amount__c', type: 'currency',
           typeAttributes: { currencyCode: 'INR' } },
         { label: 'Account Number', fieldName: 'Account_Number__c', type: 'text' },
         { label: 'Details', fieldName: 'Details__c', type: 'text' },
-        {
-            type: 'action',
-            typeAttributes: { rowActions: [{ label: 'View Details', name: 'view_details' },
-            { label: 'Delete', name: 'delete' }] }
+        { type: 'action', typeAttributes: 
+            { rowActions: 
+                [   { label: 'View Details', name: 'view_details' },
+                    { label: 'Delete', name: 'delete' }
+                ] 
+            }
         },
-        {
-            type: 'action',
-        }
+        { type: 'action' }
     ];
 
     detailColumns = [
@@ -58,7 +59,6 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
             console.error('Error fetching loan data:', error);
         }
     }
-
     loanExtractor(loans) {
         // reset maps
         this.masterLoan = {};
@@ -73,29 +73,31 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
                     // Details__c may be a JSON string or already an array/object
                     let detailsList = loan.Details__c;
                     if (typeof detailsList === 'string') {
-                        detailsList = JSON.parse(detailsList);
-                    }
-
-                    // detailsList should be an array; normalize each element to object
-                    const detailslistMaster = [];
-                    if (Array.isArray(detailsList)) {
-                        for (let det of detailsList) {
-                            let detObj = det;
-                            if (typeof det === 'string') {
-                                detObj = JSON.parse(det);
+                        //if(detailsList[0]=='[' && detailsList[1]=='(' )
+                        //{
+                            detailsList = JSON.parse(detailsList);
+                            // detailsList should be an array; normalize each element to object
+                            const detailslistMaster = [];
+                            if (Array.isArray(detailsList)) {
+                                for (let det of detailsList) {
+                                    let detObj = det;
+                                    
+                                    if (typeof det === 'string') {
+                                        detObj = JSON.parse(det);
+                                    }
+                                    detailslistMaster.push(detObj);
+                                }
+                            } else {
+                                // single object case
+                                detailslistMaster.push(detailsList);
                             }
-                            detailslistMaster.push(detObj);
-                        }
-                    } else {
-                        // single object case
-                        detailslistMaster.push(detailsList);
+                            this.masterLoan[accountKey] = detailslistMaster;
+                            console.log('masterLoan[accountKey] = detailslistMaster ', accountKey, 'list = ',detailslistMaster);
+                            // store full list keyed by accountKey
+                            // accumulate for debugging or other uses
+                            this.loanDetails.push(...detailslistMaster);
+                        //}   
                     }
-                    this.masterLoan[accountKey] = detailslistMaster;
-                    console.log('masterLoan[accountKey] = detailslistMaster ', accountKey, 'list = ',detailslistMaster);
-
-                    // store full list keyed by accountKey
-                    // accumulate for debugging or other uses
-                    this.loanDetails.push(...detailslistMaster);
                 } catch (e) {
                     console.error('Error parsing Details__c for loan', loan.Id, e);
                     //this.masterLoan[accountKey] = []; // safe fallback
@@ -114,7 +116,10 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
 
         let parentKey = row.Account_Number__c;
         console.log('row.Account_Number__c',row.Account_Number__c);
-        if (actionName === 'view_details') {
+        if(this.masterLoan[parentKey]==null)
+            this.expandedRowId = false;
+        else if (actionName === 'view_details' ) {
+
                 this.expandedRowId = parentKey;
                 this.expandedRowData=[];
                 this.expandedRowData = this.masterLoan[parentKey];
@@ -123,4 +128,17 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
     }
 
     
+    handleRowClick(event){
+        const loanId = event.target.dataset.id;
+        let parentKey = loanId;
+        console.log('row.Account_Number__c',row.Account_Number__c);
+        if(this.masterLoan[parentKey]==null)
+            this.expandedRowId = false;
+        else if (actionName === 'view_details' ) {
+                this.expandedRowId = parentKey;
+                this.expandedRowData=[];
+                this.expandedRowData = this.masterLoan[parentKey];
+        }
+    }
+
 }
