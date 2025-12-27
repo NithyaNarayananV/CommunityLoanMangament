@@ -8,6 +8,7 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
     @track expandedRowId = null;     // currently expanded parent key
     @track expandedRowData = [];     // array of child records for the expanded row
 
+
     loanColumns = [
         { label: 'Created Date', fieldName: 'CreatedDate', type: 'date',
           typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
@@ -32,17 +33,17 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
 
     detailColumns = [
         //{ label: 'Id', fieldName: 'Id', type: 'text' },
-        { label: 'Name', fieldName: 'Name', type: 'text' },
-        { label: 'Action', fieldName: 'Action__c', type: 'text' },
-        { label: 'Repay Amount', fieldName: 'Repay_Amount__c', type: 'currency',
-          typeAttributes: { currencyCode: 'INR' } },
-        { label: 'Paid To', fieldName: 'Paid_To__c', type: 'text' },
+        //{ label: 'Name', fieldName: 'Name', type: 'text', initialWidth: 250},
+        { label: 'Type', fieldName: 'Action__c', type: 'text' , initialWidth: 100 },
+        { label: 'Paid', fieldName: 'Repay_Amount__c', type: 'currency',
+          typeAttributes: { currencyCode: 'INR' } ,initialWidth: 100},
+        { label: 'Paid To', fieldName: 'Paid_To__c', type: 'text', initialWidth: 100 },
         { label: 'Due Date', fieldName: 'Repay_Date__c', type: 'date',
-          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
+          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' }, initialWidth: 100 },
         //{ label: 'Loaner ID', fieldName: 'LoanerID__c', type: 'text' },
         { label: 'Paid Date', fieldName: 'PyamentDate__c', type: 'date',
-          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' } },
-        { label: 'State', fieldName: 'State__c', type: 'text' }//,
+          typeAttributes: { day: 'numeric', month: 'short', year: 'numeric' }, initialWidth: 100 },
+        { label: 'State', fieldName: 'State__c', type: 'text', initialWidth: 120}//,
         //{ label: 'Description', fieldName: 'Description__c', type: 'text' },
         //{ label: 'Category', fieldName: 'Category__c', type: 'text' },
         //{ label: 'Loan Account', fieldName: 'Loan_Account__c', type: 'text' }
@@ -52,93 +53,43 @@ export default class ArchivedLoanRecordsViewer extends LightningElement {
     wiredLoans({ error, data }) {
         if (data) {
             // store raw loans
-            this.loans = data;
-            console.log('Loan data sample', JSON.stringify(this.loans[0]));
-            this.loanExtractor(this.loans);
+            //this.loans = data;
+            //console.log('Loan data sample', JSON.stringify(this.loans[0]));
+            //this.loanExtractor(data);
+            if (data) { // clone each loan record before adding custom props 
+                this.loans = data.map(loan => { let loanCopy = { ...loan }; 
+                    try {
+                        if (loan.Details__c) {
+                            let parsed = JSON.parse(loan.Details__c);
+                            loanCopy.detailsParsed = Array.isArray(parsed) ? parsed : [parsed];
+                        } else {
+                            loanCopy.detailsParsed = [];
+                        }
+                    } catch (error) {
+                        console.error('Error parsing Details__c for loan', loan.Id, error);
+                        loanCopy.detailsParsed = [];
+                    }    
+                    return loanCopy; 
+                });
+            } 
+            else if (error) { console.error(error); }
         } else if (error) {
             console.error('Error fetching loan data:', error);
         }
-    }
-    loanExtractor(loans) {
-        // reset maps
-        this.masterLoan = {};
-        this.loanDetails = [];
-
-        for (let loan of loans) {
-            // guard: ensure Account_Number__c exists and is a string key
-            let accountKey = loan.Account_Number__c ;
-
-            if (loan.Details__c) {
-                try {
-                    // Details__c may be a JSON string or already an array/object
-                    let detailsList = loan.Details__c;
-                    if (typeof detailsList === 'string') {
-                        //if(detailsList[0]=='[' && detailsList[1]=='(' )
-                        //{
-                            detailsList = JSON.parse(detailsList);
-                            // detailsList should be an array; normalize each element to object
-                            const detailslistMaster = [];
-                            if (Array.isArray(detailsList)) {
-                                for (let det of detailsList) {
-                                    let detObj = det;
-                                    
-                                    if (typeof det === 'string') {
-                                        detObj = JSON.parse(det);
-                                    }
-                                    detailslistMaster.push(detObj);
-                                }
-                            } else {
-                                // single object case
-                                detailslistMaster.push(detailsList);
-                            }
-                            this.masterLoan[accountKey] = detailslistMaster;
-                            console.log('masterLoan[accountKey] = detailslistMaster ', accountKey, 'list = ',detailslistMaster);
-                            // store full list keyed by accountKey
-                            // accumulate for debugging or other uses
-                            this.loanDetails.push(...detailslistMaster);
-                        //}   
-                    }
-                } catch (e) {
-                    console.error('Error parsing Details__c for loan', loan.Id, e);
-                    //this.masterLoan[accountKey] = []; // safe fallback
-                }
-            } else {
-                //this.masterLoan[accountKey] = [];
-            }
-        }
-        console.log('masterLoan map keys', Object.keys(this.masterLoan));
     }
 
     handleRowAction(event) {
         let actionName =  event.detail.action.name;
         let row = event.detail.row;
         console.log('row : ',row);
-
         let parentKey = row.Account_Number__c;
         console.log('row.Account_Number__c',row.Account_Number__c);
         if(this.masterLoan[parentKey]==null)
             this.expandedRowId = false;
         else if (actionName === 'view_details' ) {
-
-                this.expandedRowId = parentKey;
-                this.expandedRowData=[];
-                this.expandedRowData = this.masterLoan[parentKey];
-
+            this.expandedRowId = parentKey;
+            this.expandedRowData=[];
+            this.expandedRowData = this.masterLoan[parentKey];
         }
     }
-
-    
-    handleRowClick(event){
-        const loanId = event.target.dataset.id;
-        let parentKey = loanId;
-        console.log('row.Account_Number__c',row.Account_Number__c);
-        if(this.masterLoan[parentKey]==null)
-            this.expandedRowId = false;
-        else if (actionName === 'view_details' ) {
-                this.expandedRowId = parentKey;
-                this.expandedRowData=[];
-                this.expandedRowData = this.masterLoan[parentKey];
-        }
-    }
-
 }
